@@ -159,24 +159,44 @@ function initTilt() {
     );
   };
 
-  if (typeof VanillaTilt !== "undefined" && !isMobileDevice()) {
-    // Tilt effect on theme cards (desktop only)
-    VanillaTilt.init(document.querySelectorAll(".theme-card"), {
-      max: 10,
-      speed: 400,
-      glare: true,
-      "max-glare": 0.3,
-      perspective: 1000,
-    });
+  if (typeof VanillaTilt !== "undefined") {
+    // Only apply tilt and glare on desktop
+    if (!isMobileDevice()) {
+      // Tilt effect on theme cards (desktop only)
+      VanillaTilt.init(document.querySelectorAll(".theme-card"), {
+        max: 10,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.3,
+        perspective: 1000,
+      });
 
-    // Tilt effect on board cards
-    VanillaTilt.init(document.querySelectorAll(".board-card"), {
-      max: 8,
-      speed: 300,
-      glare: true,
-      "max-glare": 0.2,
-      perspective: 800,
-    });
+      // Tilt effect on board cards
+      VanillaTilt.init(document.querySelectorAll(".board-card"), {
+        max: 8,
+        speed: 300,
+        glare: true,
+        "max-glare": 0.2,
+        perspective: 800,
+      });
+
+      // Tilt effect on form container
+      VanillaTilt.init(document.querySelectorAll(".form-container"), {
+        max: 2,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.1,
+        perspective: 1000,
+      });
+    } else {
+      // On mobile, disable tilt/glare by removing the data attributes
+      document.querySelectorAll("[data-tilt]").forEach((el) => {
+        el.removeAttribute("data-tilt");
+        el.removeAttribute("data-tilt-glare");
+        el.removeAttribute("data-tilt-max");
+        el.removeAttribute("data-tilt-speed");
+      });
+    }
   }
 }
 
@@ -373,6 +393,28 @@ function initSoundToggle() {
 function initFormLogic() {
   const form = document.getElementById("registrationForm");
   const successMessage = document.getElementById("successMessage");
+  const mobileInput = document.querySelector('input[name="mobile"]');
+  const whatsappInput = document.getElementById("whatsappInput");
+  const sameAsPhoneCheckbox = document.getElementById("sameAsPhone");
+
+  // Auto-fill WhatsApp number when checkbox is checked
+  if (sameAsPhoneCheckbox && mobileInput && whatsappInput) {
+    sameAsPhoneCheckbox.addEventListener("change", function () {
+      if (this.checked) {
+        whatsappInput.value = mobileInput.value;
+        whatsappInput.disabled = true;
+      } else {
+        whatsappInput.disabled = false;
+      }
+    });
+
+    // Also update WhatsApp when mobile number changes (if checkbox is checked)
+    mobileInput.addEventListener("input", function () {
+      if (sameAsPhoneCheckbox.checked) {
+        whatsappInput.value = this.value;
+      }
+    });
+  }
 
   // Form submission
   form.addEventListener("submit", function (e) {
