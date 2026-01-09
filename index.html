@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udaan Season 12 - Board Member Auditions | Tribal Heritage & Conservation</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Philosopher:wght@400;700&family=Cormorant+Garamond:wght@300;400;600;700&family=Satisfy&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- AOS - Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Tribal Pattern Overlay -->
+    <div class="tribal-overlay">
+        <svg class="tribal-pattern tribal-pattern-1" viewBox="0 0 200 200">
+            <path d="M100,20 Q120,40 100,60 Q80,40 100,20 M100,60 L100,100 M80,80 L100,100 L120,80 M100,100 Q120,120 100,140 Q80,120 100,100 M70,140 Q100,150 130,140" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        <svg class="tribal-pattern tribal-pattern-2" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="40" stroke="currentColor" fill="none" stroke-width="2"/>
+            <circle cx="100" cy="100" r="30" stroke="currentColor" fill="none" stroke-width="1"/>
+            <path d="M100,60 L100,40 M100,140 L100,160 M60,100 L40,100 M140,100 L160,100" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <svg class="tribal-pattern tribal-pattern-3" viewBox="0 0 200 200">
+            <path d="M100,50 L120,100 L100,150 L80,100 Z" stroke="currentColor" fill="none" stroke-width="2"/>
+            <circle cx="100" cy="100" r="15" fill="currentColor"/>
+        </svg>
+    </div>
+    
+    <!-- Floating Leaves Animation -->
+    <div class="leaves-container">
+        <div class="leaf leaf-1"><i class="fas fa-leaf"></i></div>
+        <div class="leaf leaf-2"><i class="fas fa-leaf"></i></div>
+        <div class="leaf leaf-3"><i class="fas fa-leaf"></i></div>
+        <div class="leaf leaf-4"><i class="fas fa-leaf"></i></div>
+        <div class="leaf leaf-5"><i class="fas fa-leaf"></i></div>
+    </div>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Hero Section -->
+        <section class="hero-section" data-aos="fade-down" data-aos-duration="1500">
+            <div class="hero-content">
+                <div class="tribal-icon" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="ri-ancient-gate-line"></i>
+                </div>
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="400">
+                    <span class="typed-text"></span>
+                </h1>
+                <div class="season-badge" data-aos="flip-up" data-aos-delay="800">
+                    <span class="season-number">Season 12</span>
+                </div>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="1000">
+                    Board Member Auditions
+                </p>
+                <div class="theme-tagline" data-aos="fade-up" data-aos-delay="1200">
+                    <i class="fas fa-seedling"></i>
+                    <span>The Significance of Tribes in Wildlife and Forest Conservation</span>
+                    <i class="fas fa-paw"></i>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="1500">
+                <div class="scroll-arrow"></div>
+                <span>Begin Your Journey</span>
+            </div>
+        </section>
+
+        <!-- Theme Introduction Section -->
+        <section class="theme-section" data-aos="fade-up">
+            <div class="section-container">
+                <div class="theme-header">
+                    <div class="tribal-divider">
+                        <span class="divider-symbol">◆</span>
+                        <span class="divider-line"></span>
+                        <span class="divider-symbol">◆</span>
+                    </div>
+                    <h2 class="section-title">Guardians of the Forest</h2>
+                    <p class="section-subtitle">Where Ancient Wisdom Meets Modern Conservation</p>
+                </div>
+                
+                <div class="theme-cards">
+                    <div class="theme-card" data-aos="fade-right" data-aos-delay="200">
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Tribal Wisdom</h3>
+                        <p>Indigenous communities have protected forests for millennia, their knowledge systems offering sustainable pathways for conservation.</p>
+                    </div>
+                    
+                    <div class="theme-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="card-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <h3>Forest Ecosystems</h3>
+                        <p>Sacred groves and traditional practices have preserved biodiversity hotspots, creating harmony between humanity and nature.</p>
+                    </div>
+                    
+                    <div class="theme-card" data-aos="fade-left" data-aos-delay="600">
+                        <div class="card-icon">
+                            <i class="fas fa-dove"></i>
+                        </div>
+                        <h3>Wildlife Harmony</h3>
+                        <p>Tribal reverence for wildlife creates coexistence models crucial for protecting endangered species and their habitats.</p>
+                    </div>
+                </div>
+                
+                <div class="quote-section" data-aos="zoom-in" data-aos-delay="800">
+                    <blockquote>
+                        <i class="fas fa-quote-left"></i>
+                        <p>"In every walk with nature, one receives far more than he seeks. The wisdom of indigenous peoples reminds us that we are not separate from the forest—we are the forest."</p>
+                        <i class="fas fa-quote-right"></i>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Form Section -->
+        <section class="registration-section" data-aos="fade-up">
+            <div class="form-container">
+                <div class="form-header">
+                    <div class="tribal-divider">
+                        <span class="divider-symbol">◆</span>
+                        <span class="divider-line"></span>
+                        <span class="divider-symbol">◆</span>
+                    </div>
+                    <h2 class="form-title">Join Our Tribe</h2>
+                    <p class="form-description">Become a guardian of stories, art, and voices. Register for Udaan board member auditions.</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" data-aos="fade-down">
+                    <div class="progress-steps">
+                        <div class="progress-step active" data-step="1">
+                            <div class="step-circle">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span class="step-label">Personal</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-circle">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <span class="step-label">Academic</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-circle">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <span class="step-label">Contact</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="4">
+                            <div class="step-circle">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <span class="step-label">Boards</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Main Form -->
+                <form action="process_registration.php" method="POST" id="registrationForm" class="audition-form">
+                    
+                    <!-- Section 1: Personal Information -->
+                    <div class="form-section active" data-section="1" data-aos="fade-right">
+                        <div class="section-icon">
+                            <i class="fas fa-feather-alt"></i>
+                        </div>
+                        <h3 class="section-heading">Personal Identity</h3>
+                        
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="input-icon fas fa-user"></i>
+                                <input type="text" id="fullName" name="full_name" required>
+                                <label for="fullName">Full Name</label>
+                                <div class="input-underline"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Academic Information -->
+                    <div class="form-section" data-section="2" data-aos="fade-left">
+                        <div class="section-icon">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <h3 class="section-heading">Academic Journey</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="input-icon fas fa-building-columns"></i>
+                                    <input type="text" id="department" name="department" required>
+                                    <label for="department">Department</label>
+                                    <div class="input-underline"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="input-icon fas fa-book"></i>
+                                    <input type="text" id="course" name="course" required>
+                                    <label for="course">Course</label>
+                                    <div class="input-underline"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="select-wrapper">
+                                <i class="input-icon fas fa-layer-group"></i>
+                                <select id="semester" name="semester" required>
+                                    <option value="" disabled selected>Select Semester</option>
+                                    <option value="1">1st Semester</option>
+                                    <option value="2">2nd Semester</option>
+                                    <option value="3">3rd Semester</option>
+                                    <option value="4">4th Semester</option>
+                                    <option value="5">5th Semester</option>
+                                    <option value="6">6th Semester</option>
+                                    <option value="7">7th Semester</option>
+                                    <option value="8">8th Semester</option>
+                                </select>
+                                <div class="select-arrow"><i class="fas fa-chevron-down"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Contact Information -->
+                    <div class="form-section" data-section="3" data-aos="fade-right">
+                        <div class="section-icon">
+                            <i class="fas fa-dove"></i>
+                        </div>
+                        <h3 class="section-heading">Connect With Us</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="input-icon fas fa-mobile-alt"></i>
+                                    <input type="tel" id="mobile" name="mobile_number" pattern="[0-9]{10}" required>
+                                    <label for="mobile">Mobile Number</label>
+                                    <div class="input-underline"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <i class="input-icon fab fa-whatsapp"></i>
+                                    <input type="tel" id="whatsapp" name="whatsapp_number" pattern="[0-9]{10}" required>
+                                    <label for="whatsapp">WhatsApp Number</label>
+                                    <div class="input-underline"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="input-icon fas fa-envelope"></i>
+                                <input type="email" id="email" name="email_address" required>
+                                <label for="email">Email Address</label>
+                                <div class="input-underline"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Board Selection -->
+                    <div class="form-section" data-section="4" data-aos="fade-left">
+                        <div class="section-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h3 class="section-heading">Choose Your Path</h3>
+                        <p class="section-description">Select the boards you wish to audition for (multiple selections allowed)</p>
+                        
+                        <div class="boards-grid">
+                            <div class="board-option" data-aos="zoom-in" data-aos-delay="100">
+                                <input type="checkbox" id="board_art" name="boards[]" value="Art & Design">
+                                <label for="board_art" class="board-card">
+                                    <div class="board-icon">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div class="board-content">
+                                        <h4>Art & Design</h4>
+                                        <p>Visual storytelling through illustrations</p>
+                                    </div>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="board-option" data-aos="zoom-in" data-aos-delay="200">
+                                <input type="checkbox" id="board_photo" name="boards[]" value="Photography">
+                                <label for="board_photo" class="board-card">
+                                    <div class="board-icon">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                    <div class="board-content">
+                                        <h4>Photography</h4>
+                                        <p>Capture moments that speak volumes</p>
+                                    </div>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="board-option" data-aos="zoom-in" data-aos-delay="300">
+                                <input type="checkbox" id="board_hindi" name="boards[]" value="Hindi Editorial">
+                                <label for="board_hindi" class="board-card">
+                                    <div class="board-icon">
+                                        <i class="fas fa-pen-fancy"></i>
+                                    </div>
+                                    <div class="board-content">
+                                        <h4>Hindi Editorial</h4>
+                                        <p>Craft stories in the language of heart</p>
+                                    </div>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="board-option" data-aos="zoom-in" data-aos-delay="400">
+                                <input type="checkbox" id="board_english" name="boards[]" value="English Editorial">
+                                <label for="board_english" class="board-card">
+                                    <div class="board-icon">
+                                        <i class="fas fa-feather"></i>
+                                    </div>
+                                    <div class="board-content">
+                                        <h4>English Editorial</h4>
+                                        <p>Weave narratives that inspire</p>
+                                    </div>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="board-option" data-aos="zoom-in" data-aos-delay="500">
+                                <input type="checkbox" id="board_marketing" name="boards[]" value="Marketing">
+                                <label for="board_marketing" class="board-card">
+                                    <div class="board-icon">
+                                        <i class="fas fa-bullhorn"></i>
+                                    </div>
+                                    <div class="board-content">
+                                        <h4>Marketing</h4>
+                                        <p>Amplify voices, create impact</p>
+                                    </div>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="board-option" data-aos="zoom-in" data-aos-delay="600">
+                                <input type="checkbox" id="board_graphic" name="boards[]" value="Graphic Design">
+                                <label for="board_graphic" class="board-card">
+                                    <div class="board-icon">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </div>
+                                    <div class="board-content">
+                                        <h4>Graphic Design</h4>
+                                        <p>Transform ideas into visual magic</p>
+                                    </div>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="board-option" data-aos="zoom-in" data-aos-delay="700">
+                                <input type="checkbox" id="board_website" name="boards[]" value="Website">
+                                <label for="board_website" class="board-card">
+                                    <div class="board-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="board-content">
+                                        <h4>Website</h4>
+                                        <p>Build digital experiences that matter</p>
+                                    </div>
+                                    <div class="check-indicator">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-navigation">
+                        <button type="button" class="nav-btn prev-btn" id="prevBtn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Previous</span>
+                        </button>
+                        
+                        <button type="button" class="nav-btn next-btn" id="nextBtn">
+                            <span>Next</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <span class="btn-text">Submit Application</span>
+                            <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Success Message (Hidden Initially) -->
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Welcome to the Tribe!</h3>
+                    <p>Your application has been received. We'll contact you soon with audition details.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer" data-aos="fade-up">
+            <div class="footer-content">
+                <div class="tribal-divider">
+                    <span class="divider-symbol">◆</span>
+                    <span class="divider-line"></span>
+                    <span class="divider-symbol">◆</span>
+                </div>
+                <p class="footer-quote">
+                    <i class="fas fa-leaf"></i>
+                    "We do not inherit the earth from our ancestors; we borrow it from our children."
+                    <i class="fas fa-leaf"></i>
+                </p>
+                <p class="footer-copy">&copy; 2024 Udaan - Season 12 | University Magazine</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Lottie Animation Container -->
+    <div id="lottie-container"></div>
+
+    <!-- JavaScript Libraries -->
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- AOS - Animate On Scroll -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Typed.js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16"></script>
+    
+    <!-- Vanilla Tilt -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
