@@ -146,29 +146,33 @@
                     
                     <form action="process_registration.php" method="POST" id="registrationForm">
                         
+
+                        <!-- Error Message Area -->
+                        <div id="formError" style="display:none;color:#ff6b6b;font-size:1.05rem;margin-bottom:1.2rem;"></div>
+
                         <div class="section-header" data-aos="fade-right">
                             <h3><i class="fa-solid fa-fingerprint"></i> &nbsp;Identity</h3>
                         </div>
 
                         <div class="input-group">
                             <input type="text" name="fullname" required autocomplete="off">
-                            <label>Full Name</label>
+                            <label>Full Name <span style="color:#ff6b6b">*</span></label>
                         </div>
 
                         <div class="form-row-grid">
                         <div class="input-group">
                             <input type="email" name="email" required autocomplete="off">
-                            <label>University Email</label>
+                            <label>University Email <span style="color:#ff6b6b">*</span></label>
                         </div>
                         <div class="input-group">
                                 <input type="tel" name="mobile" required autocomplete="off" pattern="[0-9]{10}">
-                                <label>Mobile Number</label>
+                                <label>Mobile Number <span style="color:#ff6b6b">*</span></label>
                             </div>
                         </div>
 
                         <div class="input-group">
                             <input type="tel" name="whatsapp" required autocomplete="off" pattern="[0-9]{10}" id="whatsappInput">
-                            <label>WhatsApp Number</label>
+                            <label>WhatsApp Number <span style="color:#ff6b6b">*</span></label>
                         </div>
                         
                         <div style="margin-bottom: 2.5rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -183,11 +187,11 @@
                         <div class="form-row-grid">
                             <div class="input-group">
                                 <input type="text" name="course" required autocomplete="off">
-                                <label>Course (e.g., B.Tech, BA)</label>
+                                <label>Course (e.g. B.Tech) <span style="color:#ff6b6b">*</span></label>
                             </div>
                             <div class="input-group">
                                 <input type="text" name="department" required autocomplete="off">
-                                <label>Department</label>
+                                <label>Department <span style="color:#ff6b6b">*</span></label>
                             </div>
                         </div>
                         
@@ -203,12 +207,12 @@
                                 <option value="7">Semester 7</option>
                                 <option value="8">Semester 8</option>
                             </select>
-                            <label>Current Semester</label>
+                            <label>Current Semester <span style="color:#ff6b6b">*</span></label>
                         </div>
 
                         <div class="section-header" style="margin-top: 3rem;">
-                            <h3><i class="fa-solid fa-people-group"></i> &nbsp;Choose Your Tribe</h3>
-                            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 5px;">Select all boards you wish to audition for.</p>
+                            <h3><i class="fa-solid fa-people-group"></i> &nbsp;Choose Your Tribe <span style="color:#ff6b6b">*</span></h3>
+                            <p style="font-size: 1.08rem; color: #2c3e50; font-weight: 500; margin-top: 7px; letter-spacing: 0.01em;">Select all boards you wish to audition for.</p>
                         </div>
 
                         <div class="board-grid">
@@ -255,6 +259,16 @@
                                 <h4>Web Dev</h4>
                             </label>
 
+                        </div>
+
+
+                        <!-- Remarks Section -->
+                        <div class="section-header" style="margin-top: 3rem;">
+                            <h3><i class="fa-solid fa-comment-dots"></i> &nbsp;Remarks</h3>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 2.5rem;">
+                            <textarea name="suggestions" id="suggestionsInput" rows="5" autocomplete="off" class="input-field" style="width:100%;resize:vertical;"></textarea>
+                            <label for="suggestionsInput">Suggestions for Udaan (optional)</label>
                         </div>
 
                         <div class="submit-container">

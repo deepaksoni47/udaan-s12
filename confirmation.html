@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registration Successful | Udaan Season 12</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Philosopher&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e9 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: 'Philosopher', sans-serif;
+    }
+
+    #particles-js {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .page-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.4rem;
+      color: var(--golden-amber);
+      margin-bottom: 24px;
+      letter-spacing: 0.03em;
+    }
+
+    .ceremonial-card {
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 34px;
+      border: 2px solid #5c7f3c;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+      padding: 42px 28px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    .ceremonial-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .logo-wrapper img {
+      max-width: 200px;
+      margin-bottom: 0px;
+    }
+
+    .tribal-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px 0 24px;
+    }
+
+    .tribal-divider span {
+      color: #8f9779;
+      font-size: 1.2rem;
+    }
+
+    .tribal-divider .line {
+      width: 70px;
+      height: 2px;
+      background: linear-gradient(90deg, #5c7f3c, #d4af37);
+      border-radius: 10px;
+    }
+
+    .welcome-text {
+      font-size: 1.15rem;
+      color: #5c7f3c;
+      margin-bottom: 18px;
+    }
+
+    .ticket-info {
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+      color: #2c3e50;
+      line-height: 1.7;
+    }
+
+    .ticket-info strong {
+      color: #3f5f2f;
+    }
+
+    .meeting-box {
+      background: linear-gradient(135deg, rgba(92,127,60,0.1), rgba(212,175,55,0.1));
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 24px;
+      font-size: 1.05rem;
+      color: #2c3e50;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s ease;
+      font-family: 'Philosopher', sans-serif;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #5c7f3c, #7a9f55);
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(92,127,60,0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(92,127,60,0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #5c7f3c;
+      color: #5c7f3c;
+    }
+
+    .btn-outline:hover {
+      background: #5c7f3c;
+      color: #fff;
+    }
+
+    .floating-leaf {
+      position: absolute;
+      color: rgba(92,127,60,0.25);
+      animation: float 10s infinite linear;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-120vh); }
+    }
+  </style>
+</head>
+<body>
+
+
+<div id="particles-js"></div>
+
+<!-- Tribal Pattern Overlay -->
+<div class="tribal-overlay">
+  <svg class="tribal-pattern tribal-pattern-1" viewBox="0 0 200 200">
+    <path d="M100,20 Q120,40 100,60 Q80,40 100,20 M100,60 L100,100 M80,80 L100,100 L120,80 M100,100 Q120,120 100,140 Q80,120 100,100 M70,140 Q100,150 130,140" stroke="currentColor" fill="none" stroke-width="2"/>
+  </svg>
+  <svg class="tribal-pattern tribal-pattern-2" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="40" stroke="currentColor" fill="none" stroke-width="2"/>
+    <circle cx="100" cy="100" r="30" stroke="currentColor" fill="none" stroke-width="1"/>
+    <path d="M100,60 L100,40 M100,140 L100,160 M60,100 L40,100 M140,100 L160,100" stroke="currentColor" stroke-width="2"/>
+  </svg>
+  <svg class="tribal-pattern tribal-pattern-3" viewBox="0 0 200 200">
+    <path d="M100,50 L120,100 L100,150 L80,100 Z" stroke="currentColor" fill="none" stroke-width="2"/>
+    <circle cx="100" cy="100" r="15" fill="currentColor"/>
+  </svg>
+</div>
+
+<!-- Floating Leaves Animation -->
+<div class="leaves-container">
+  <div class="leaf leaf-1"><i class="fas fa-leaf"></i></div>
+  <div class="leaf leaf-2"><i class="fas fa-leaf"></i></div>
+  <div class="leaf leaf-3"><i class="fas fa-leaf"></i></div>
+  <div class="leaf leaf-4"><i class="fas fa-leaf"></i></div>
+  <div class="leaf leaf-5"><i class="fas fa-leaf"></i></div>
+</div>
+
+<div class="page-wrapper" data-aos="fade-up">
+
+  <div class="title">Registration Successful</div>
+
+  <div class="ceremonial-card" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.1">
+
+    <div class="logo-wrapper">
+      <img src="logo.png" alt="UDAAN Logo">
+    </div>
+
+    <div class="tribal-divider">
+      <span>◆</span>
+      <div class="line"></div>
+      <span>◆</span>
+    </div>
+
+    <div class="welcome-text">
+      Welcome, guardian of creativity. Your journey begins.
+    </div>
+
+    <div class="ticket-info">
+      <div><strong>Registration ID:</strong> <span id="regNumber">#UDN2026XXXX</span></div>
+      <div><strong>Name:</strong> <span id="regName">Your Name</span></div>
+      <div><strong>Department:</strong> <span id="regDept">Your Department</span></div>
+      <div><strong>Course:</strong> <span id="regCourse">Your Course</span></div>
+    </div>
+
+    <div class="meeting-box">
+      <strong>Meet the Tribe</strong><br>
+      Saturday, XXth January 2026<br>
+      11:00 AM, Venue Name
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="window.print()">
+        <i class="ri-printer-line"></i> Print Pass
+      </button>
+      <button class="btn btn-outline" onclick="window.location.href='index.html'">
+        Return to Forest
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+  AOS.init();
+
+  function getQueryParam(name) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name) || '';
+  }
+
+  document.getElementById('regNumber').textContent = getQueryParam('reg') || '#UDN2026XXXX';
+  document.getElementById('regName').textContent = getQueryParam('name') || 'Your Name';
+  document.getElementById('regDept').textContent = getQueryParam('dept') || 'Your Department';
+  document.getElementById('regCourse').textContent = getQueryParam('course') || 'Your Course';
+
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 70 },
+      color: { value: ["#5c7f3c", "#d4af37", "#8f9779"] },
+      size: { value: 3, random: true },
+      opacity: { value: 0.4, random: true },
+      move: { speed: 1.6 }
+    }
+  });
+</script>
+
+</body>
+</html>

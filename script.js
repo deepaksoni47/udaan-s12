@@ -232,6 +232,10 @@ function initSoundToggle() {
     }, 10);
   });
 
+  // Set icon to muted by default on load
+  soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+  soundToggle.classList.add("muted");
+
   function playAmbientSound() {
     // Create forest ambient sound using Web Audio API
     try {
@@ -428,11 +432,17 @@ function initFormLogic() {
   function validateForm() {
     const inputs = form.querySelectorAll("input[required], select[required]");
     let isValid = true;
+    let errorMessages = [];
 
     inputs.forEach((input) => {
       if (!input.value.trim() && input.type !== "checkbox") {
         isValid = false;
         highlightError(input);
+        const label = input.parentElement.querySelector("label");
+        if (label)
+          errorMessages.push(
+            label.textContent.replace("*", "").trim() + " is required."
+          );
       } else {
         removeError(input);
       }
@@ -443,6 +453,7 @@ function initFormLogic() {
         if (!emailRegex.test(input.value)) {
           isValid = false;
           highlightError(input);
+          errorMessages.push("Please enter a valid email address.");
         }
       }
 
@@ -452,17 +463,32 @@ function initFormLogic() {
         if (!phoneRegex.test(input.value)) {
           isValid = false;
           highlightError(input);
+          errorMessages.push("Phone numbers must be 10 digits.");
         }
       }
     });
 
     // Check if at least one board is selected
-    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = form.querySelectorAll(
+      'input[type="checkbox"].board-checkbox'
+    );
     const isAnyChecked = Array.from(checkboxes).some((cb) => cb.checked);
 
     if (!isAnyChecked) {
       isValid = false;
-      showError("Please select at least one board");
+      errorMessages.push("Please select at least one board.");
+    }
+
+    // Show error messages if any
+    const errorDiv = document.getElementById("formError");
+    if (!isValid && errorDiv) {
+      errorDiv.innerHTML = errorMessages
+        .map((e) => `<div>• ${e}</div>`)
+        .join("");
+      errorDiv.style.display = "block";
+    } else if (errorDiv) {
+      errorDiv.innerHTML = "";
+      errorDiv.style.display = "none";
     }
 
     return isValid;
@@ -479,20 +505,24 @@ function initFormLogic() {
     input.style.borderBottomColor = "";
   }
 
+  // No longer use alert, errors are shown inline
   function showError(message) {
-    alert(message);
+    const errorDiv = document.getElementById("formError");
+    if (errorDiv) {
+      errorDiv.innerHTML = `<div>• ${message}</div>`;
+      errorDiv.style.display = "block";
+    }
   }
 
   function submitForm() {
-    // Show success message
-    form.style.display = "none";
-    successMessage.style.display = "block";
-
-    // Add confetti animation
-    createConfetti();
-
-    // Optional: Submit form data via AJAX here
-    // fetch(form.action, { method: 'POST', body: new FormData(form) });
+    // Hide error message
+    const errorDiv = document.getElementById("formError");
+    if (errorDiv) {
+      errorDiv.innerHTML = "";
+      errorDiv.style.display = "none";
+    }
+    // Redirect to confirmation page
+    window.location.href = "confirmation.html";
   }
 
   function createConfetti() {

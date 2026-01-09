@@ -1,3 +1,31 @@
+/* Themed Textarea Styling */
+.input-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid rgba(44, 62, 80, 0.2);
+    padding: 10px 0;
+    font-family: var(--font-philosopher);
+    font-size: 1.1rem;
+    color: var(--ivory);
+    transition: all 0.3s ease;
+    outline: none;
+    resize: vertical;
+    border-radius: 0 0 12px 12px;
+    box-shadow: none;
+}
+
+.input-group textarea:focus,
+.input-group textarea:valid {
+    border-bottom-color: var(--tribal-gold);
+}
+
+.input-group textarea:focus ~ label,
+.input-group textarea:valid ~ label {
+    top: -20px;
+    font-size: 0.85rem;
+    color: var(--tribal-gold);
+}
 /* ===================================
    UDAAN SEASON 12 - TRIBAL CONSERVATION THEME
    CSS Stylesheet
@@ -635,9 +663,9 @@ blockquote p {
 .form-container {
     max-width: 900px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 60px;
     border-radius: 30px;
     border: 1px solid rgba(124, 179, 66, 0.25);
@@ -650,7 +678,7 @@ blockquote p {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     z-index: 0;
     pointer-events: none;
     border-radius: 30px;
@@ -741,8 +769,12 @@ blockquote p {
 
 /* Dropdown styling fix */
 .input-group select option {
-    background: #ffffff;
-    color: var(--ivory);
+    background: var(--forest-deep);
+    color: var(--sage-green);
+    font-family: var(--font-philosopher);
+    font-size: 1.05rem;
+    border-radius: 8px;
+    padding: 10px 16px;
 }
 
 /* Board Selection Grid */
@@ -1178,6 +1210,19 @@ blockquote p {
     color: rgba(198, 134, 66, 0.7);
     font-size: 1rem;
 }
+    
+    /* Make form use full width on mobile */
+    .form-wrapper {
+        max-width: none;
+        padding: 0 8px;
+        margin: 0;
+    }
+    
+    .form-container {
+        max-width: none;
+        width: 100%;
+        margin: 0;
+    }
 
 /* ===================================
    BOARD SELECTION GRID
@@ -1935,6 +1980,19 @@ blockquote p {
         font-size: 0.95rem;
     }
     
+        /* Make form use full width on small mobile */
+        .form-wrapper {
+            max-width: none;
+            padding: 0 6px;
+            margin: 0;
+        }
+    
+        .form-container {
+            max-width: none;
+            width: 100%;
+            margin: 0;
+        }
+    
     /* Boards Grid */
     .boards-grid {
         grid-template-columns: 1fr;
@@ -2080,6 +2138,19 @@ blockquote p {
     .scroll-indicator span {
         font-size: 0.95rem;
     }
+    
+        /* Make form use full width on extra small screens */
+        .form-wrapper {
+            max-width: none;
+            padding: 0 4px;
+            margin: 0;
+        }
+    
+        .form-container {
+            max-width: none;
+            width: 100%;
+            margin: 0;
+        }
     
     /* Theme Section */
     .theme-section {
