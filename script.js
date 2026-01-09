@@ -118,7 +118,7 @@ function initParticles() {
 function initAOS() {
   if (typeof AOS !== "undefined") {
     AOS.init({
-      duration: 300,
+      duration: 800,
       easing: "ease-out-cubic",
       once: true,
       offset: 50,
