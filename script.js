@@ -117,17 +117,12 @@ function initParticles() {
 // ===================================
 function initAOS() {
   if (typeof AOS !== "undefined") {
-    // Adjust duration based on screen size
-    const isMobile = window.innerWidth <= 768;
-    const duration = isMobile ? 1500 : 1000;
-    const offset = isMobile ? 50 : 100;
-
     AOS.init({
-      duration: duration,
+      duration: 300,
       easing: "ease-out-cubic",
       once: true,
-      offset: offset,
-      delay: isMobile ? 150 : 100,
+      offset: 50,
+      delay: 0,
       disable: false,
     });
   }
