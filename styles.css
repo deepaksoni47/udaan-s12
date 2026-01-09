@@ -1349,7 +1349,30 @@ blockquote p {
         font-size: 1.5rem;
     }
     
-    /* Registration Section */
+}
+
+/* ===================================
+   DISABLE HOVER EFFECTS ON TOUCH DEVICES
+   =================================== */
+@media (hover: none) and (pointer: coarse) {
+    /* Touch devices - disable hover transform effects */
+    .theme-card:hover {
+        transform: none;
+    }
+    
+    .season-badge:hover::before {
+        display: none;
+    }
+    
+    .sound-toggle:hover {
+        transform: scale(1) rotate(0deg);
+    }
+    
+    /* Disable unnecessary animations for performance */
+    * {
+        animation-duration: 0.5s !important;
+    }
+}    /* Registration Section */
     .registration-section {
         padding: 60px 15px;
     }
@@ -1496,7 +1519,7 @@ blockquote p {
    =================================== */
 @media (max-width: 600px) {
     html {
-        font-size: 13px;
+        font-size: 15px;
     }
     
     body {
@@ -1822,7 +1845,7 @@ blockquote p {
    =================================== */
 @media (max-width: 480px) {
     html {
-        font-size: 12px;
+        font-size: 13.5px;
     }
     
     .main-container {
@@ -1980,7 +2003,7 @@ blockquote p {
    =================================== */
 @media (max-width: 360px) {
     html {
-        font-size: 11px;
+        font-size: 12.5px;
     }
     
     .hero-title {
