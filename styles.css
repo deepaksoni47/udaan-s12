@@ -2007,7 +2007,7 @@ blockquote p {
    =================================== */
 @media (max-width: 600px) {
     html {
-        font-size: 16px;
+        font-size: 18px;
     }
     
     body {
@@ -2029,7 +2029,7 @@ blockquote p {
     }
     
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
         margin-bottom: 15px;
         line-height: 1.2;
     }
@@ -2047,22 +2047,22 @@ blockquote p {
     }
     
     .season-number {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
     
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin: 12px 0;
     }
     
     .theme-tagline {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         gap: 8px;
         margin-top: 15px;
     }
     
     .theme-tagline i {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     /* Scroll Indicator */
@@ -2078,7 +2078,7 @@ blockquote p {
     }
     
     .scroll-indicator span {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
     
     /* Theme Section */
@@ -2093,12 +2093,12 @@ blockquote p {
     }
     
     .section-title {
-        font-size: 1.9rem;
+        font-size: 2rem;
         margin-bottom: 10px;
     }
     
     .section-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .tribal-divider {
@@ -2176,12 +2176,12 @@ blockquote p {
     }
     
     .form-title {
-        font-size: 1.7rem;
+        font-size: 2rem;
         margin-bottom: 10px;
     }
     
     .form-description {
-        font-size: 1rem;
+        font-size: 1.15rem;
     }
     
     /* Progress Bar */
@@ -2206,8 +2206,8 @@ blockquote p {
     }
     
     .step-label {
-        font-size: 0.65rem;
-        max-width: 50px;
+        font-size: 0.8rem;
+        max-width: 60px;
         word-break: break-word;
     }
     
@@ -2223,12 +2223,12 @@ blockquote p {
     }
     
     .section-heading {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         margin-bottom: 20px;
     }
     
     .section-description {
-        font-size: 0.95rem;
+        font-size: 1.1rem;
         margin-bottom: 15px;
     }
     
@@ -2245,8 +2245,8 @@ blockquote p {
     
     .input-wrapper input,
     .select-wrapper select {
-        padding: 10px 10px 10px 30px;
-        font-size: 0.95rem;
+        padding: 12px 12px 12px 35px;
+        font-size: 1.1rem;
     }
     
     .input-icon {
@@ -2256,7 +2256,7 @@ blockquote p {
     
     .input-wrapper label {
         left: 30px;
-        font-size: 0.9rem;
+        font-size: 1.05rem;
     }
     
     .select-arrow {
@@ -2282,7 +2282,7 @@ blockquote p {
     }
     
     .board-option label {
-        font-size: 1rem;
+        font-size: 1.15rem;
         margin-left: 0;
         margin-top: 10px;
     }
@@ -2304,8 +2304,8 @@ blockquote p {
     .next-btn,
     .submit-btn {
         width: 100%;
-        padding: 12px 15px;
-        font-size: 0.95rem;
+        padding: 14px 18px;
+        font-size: 1.1rem;
         margin-left: 0 !important;
     }
     
@@ -2334,7 +2334,7 @@ blockquote p {
    =================================== */
 @media (max-width: 480px) {
     html {
-        font-size: 13.5px;
+        font-size: 16px;
     }
     
     .main-container {
@@ -2348,7 +2348,7 @@ blockquote p {
     }
     
     .hero-title {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
         margin-bottom: 18px;
     }
     
@@ -2371,16 +2371,16 @@ blockquote p {
     }
     
     .season-number {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         margin: 15px 0;
     }
     
     .theme-tagline {
-        font-size: 0.85rem;
+        font-size: 1rem;
         gap: 6px;
     }
     
@@ -2392,7 +2392,7 @@ blockquote p {
     }
     
     .section-title {
-        font-size: 1.5rem;
+        font-size: 1.9rem;
     }
     
     .theme-cards {
@@ -2408,11 +2408,11 @@ blockquote p {
     }
     
     .theme-card h3 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
     }
     
     .theme-card p {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
     }
     
     /* Quote Section */
@@ -2421,12 +2421,12 @@ blockquote p {
     }
     
     blockquote p {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
     
     blockquote .fa-quote-left,
     blockquote .fa-quote-right {
-        font-size: 1rem;
+        font-size: 1.3rem;
     }
     
     /* Registration Section */
@@ -2440,11 +2440,11 @@ blockquote p {
     }
     
     .form-title {
-        font-size: 1.5rem;
+        font-size: 1.9rem;
     }
     
     .form-description {
-        font-size: 0.95rem;
+        font-size: 1.15rem;
     }
     
     .progress-container {
@@ -2458,18 +2458,18 @@ blockquote p {
     }
     
     .step-label {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
     }
     
     .section-heading {
-        font-size: 1.4rem;
+        font-size: 1.7rem;
         margin-bottom: 15px;
     }
     
     .input-wrapper input,
     .select-wrapper select {
-        padding: 9px 9px 9px 28px;
-        font-size: 0.9rem;
+        padding: 12px 12px 12px 32px;
+        font-size: 1.05rem;
     }
     
     .input-icon {
@@ -2483,8 +2483,8 @@ blockquote p {
     .prev-btn,
     .next-btn,
     .submit-btn {
-        padding: 10px 12px;
-        font-size: 0.9rem;
+        padding: 12px 16px;
+        font-size: 1.05rem;
     }
     
     .sound-toggle {
@@ -2510,11 +2510,11 @@ blockquote p {
    =================================== */
 @media (max-width: 360px) {
     html {
-        font-size: 12.5px;
+        font-size: 15px;
     }
     
     .hero-title {
-        font-size: 1.6rem;
+        font-size: 2rem;
     }
     
     .logo-image {
@@ -2526,15 +2526,15 @@ blockquote p {
     }
     
     .season-number {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
     
     .section-title {
-        font-size: 1.4rem;
+        font-size: 1.7rem;
     }
     
     .form-title {
-        font-size: 1.4rem;
+        font-size: 1.7rem;
     }
     
     .tribal-divider {
@@ -2546,7 +2546,7 @@ blockquote p {
     }
     
     blockquote p {
-        font-size: 0.95rem;
+        font-size: 1.1rem;
     }
 }
 
