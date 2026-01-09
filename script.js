@@ -117,12 +117,18 @@ function initParticles() {
 // ===================================
 function initAOS() {
   if (typeof AOS !== "undefined") {
+    // Adjust duration based on screen size
+    const isMobile = window.innerWidth <= 768;
+    const duration = isMobile ? 1500 : 1000;
+    const offset = isMobile ? 50 : 100;
+
     AOS.init({
-      duration: 1000,
+      duration: duration,
       easing: "ease-out-cubic",
       once: true,
-      offset: 100,
-      delay: 100,
+      offset: offset,
+      delay: isMobile ? 150 : 100,
+      disable: false,
     });
   }
 }
@@ -212,83 +218,166 @@ function initSoundToggle() {
   });
 
   function playAmbientSound() {
-    // Create subtle ambient sound using Web Audio API
+    // Create forest ambient sound using Web Audio API
     try {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
 
-      // Create oscillator for subtle forest ambience
-      oscillator = audioContext.createOscillator();
-      gainNode = audioContext.createGain();
+      // Resume audio context if suspended (required by browsers)
+      if (audioContext.state === "suspended") {
+        audioContext.resume();
+      }
 
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+      // Create master gain for volume control
+      const masterGain = audioContext.createGain();
+      masterGain.gain.setValueAtTime(0.2, audioContext.currentTime);
+      masterGain.connect(audioContext.destination);
 
-      gainNode.gain.setValueAtTime(0.02, audioContext.currentTime);
+      // ===== WIND/RUSTLING (White Noise) =====
+      const bufferSize = audioContext.sampleRate * 2;
+      const noiseBuffer = audioContext.createBuffer(
+        1,
+        bufferSize,
+        audioContext.sampleRate
+      );
+      const noiseData = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        noiseData[i] = Math.random() * 2 - 1;
+      }
+      const noiseSource = audioContext.createBufferSource();
+      noiseSource.buffer = noiseBuffer;
+      noiseSource.loop = true;
 
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+      // Filter noise for wind effect
+      const noiseFilter = audioContext.createBiquadFilter();
+      noiseFilter.type = "lowpass";
+      noiseFilter.frequency.setValueAtTime(2000, audioContext.currentTime);
 
-      oscillator.start();
+      const noiseGain = audioContext.createGain();
+      noiseGain.gain.setValueAtTime(0.08, audioContext.currentTime);
 
-      // Add subtle frequency modulation
-      setInterval(() => {
-        if (!isMuted && oscillator) {
-          const freq = 80 + Math.random() * 40;
-          oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
-        }
-      }, 3000);
+      noiseSource.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(masterGain);
+      noiseSource.start();
+
+      // ===== DEEP FOREST AMBIENCE (Low Frequency) =====
+      const deepOsc = audioContext.createOscillator();
+      deepOsc.type = "sine";
+      deepOsc.frequency.setValueAtTime(50, audioContext.currentTime);
+
+      const deepGain = audioContext.createGain();
+      deepGain.gain.setValueAtTime(0.05, audioContext.currentTime);
+
+      deepOsc.connect(deepGain);
+      deepGain.connect(masterGain);
+      deepOsc.start();
+
+      // ===== BIRD CHIRPS (High Frequency Oscillators) =====
+      const createBirdChirp = (startFreq, duration, delay) => {
+        setTimeout(() => {
+          if (!isMuted) {
+            const bird = audioContext.createOscillator();
+            const birdGain = audioContext.createGain();
+
+            bird.type = "sine";
+            bird.frequency.setValueAtTime(startFreq, audioContext.currentTime);
+
+            birdGain.gain.setValueAtTime(0.06, audioContext.currentTime);
+            birdGain.gain.exponentialRampToValueAtTime(
+              0.001,
+              audioContext.currentTime + duration
+            );
+
+            // Frequency sweep for chirp effect
+            bird.frequency.exponentialRampToValueAtTime(
+              startFreq * 1.5,
+              audioContext.currentTime + duration * 0.3
+            );
+            bird.frequency.exponentialRampToValueAtTime(
+              startFreq * 0.8,
+              audioContext.currentTime + duration
+            );
+
+            bird.connect(birdGain);
+            birdGain.connect(masterGain);
+
+            bird.start();
+            bird.stop(audioContext.currentTime + duration);
+          }
+        }, delay);
+      };
+
+      // Create repeating bird patterns
+      const birdPatterns = [
+        { freq: 2000, duration: 0.15, interval: 4000 },
+        { freq: 2500, duration: 0.12, interval: 5500 },
+        { freq: 1800, duration: 0.18, interval: 6200 },
+      ];
+
+      birdPatterns.forEach((pattern) => {
+        const chirpInterval = setInterval(() => {
+          if (isMuted) {
+            clearInterval(chirpInterval);
+          } else {
+            createBirdChirp(
+              pattern.freq,
+              pattern.duration,
+              Math.random() * 500
+            );
+          }
+        }, pattern.interval);
+      });
+
+      // ===== GENTLE SWELLING (Amplitude Modulation) =====
+      const swell = audioContext.createOscillator();
+      const swellGain = audioContext.createGain();
+
+      swell.frequency.setValueAtTime(0.3, audioContext.currentTime); // Very slow 0.3 Hz
+      swellGain.gain.setValueAtTime(0.02, audioContext.currentTime);
+
+      swell.connect(swellGain);
+      swellGain.connect(masterGain.gain);
+      swell.start();
+
+      // Store for cleanup
+      window.audioOscillators = [noiseSource, deepOsc, swell];
     } catch (e) {
-      console.log("Web Audio API not supported");
+      console.log("Web Audio API not supported", e);
     }
   }
 
   function stopAmbientSound() {
-    if (oscillator) {
-      oscillator.stop();
-      oscillator = null;
+    // Stop all oscillators
+    if (window.audioOscillators) {
+      window.audioOscillators.forEach((osc) => {
+        try {
+          osc.stop();
+        } catch (e) {
+          // Oscillator already stopped
+        }
+      });
+      window.audioOscillators = null;
     }
-    if (audioContext) {
-      audioContext.close();
-      audioContext = null;
+
+    if (oscillator) {
+      try {
+        oscillator.stop();
+      } catch (e) {
+        // Oscillator already stopped
+      }
+      oscillator = null;
     }
   }
 }
 
 // ===================================
-// FORM LOGIC - MULTI-STEP FORM
+// FORM LOGIC - SINGLE PAGE FORM
 // ===================================
 function initFormLogic() {
   const form = document.getElementById("registrationForm");
-  const sections = document.querySelectorAll(".form-section");
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const submitBtn = document.getElementById("submitBtn");
-  const progressSteps = document.querySelectorAll(".progress-step");
-
-  let currentSection = 0;
-
-  // Show first section
-  showSection(currentSection);
-
-  // Previous button
-  prevBtn.addEventListener("click", function () {
-    if (currentSection > 0) {
-      currentSection--;
-      showSection(currentSection);
-      animateTransition("prev");
-    }
-  });
-
-  // Next button
-  nextBtn.addEventListener("click", function () {
-    if (validateSection(currentSection)) {
-      if (currentSection < sections.length - 1) {
-        currentSection++;
-        showSection(currentSection);
-        animateTransition("next");
-      }
-    }
-  });
+  const successMessage = document.getElementById("successMessage");
 
   // Form submission
   form.addEventListener("submit", function (e) {
@@ -298,6 +387,118 @@ function initFormLogic() {
       submitForm();
     }
   });
+
+  function validateForm() {
+    const inputs = form.querySelectorAll("input[required], select[required]");
+    let isValid = true;
+
+    inputs.forEach((input) => {
+      if (!input.value.trim() && input.type !== "checkbox") {
+        isValid = false;
+        highlightError(input);
+      } else {
+        removeError(input);
+      }
+
+      // Validate email
+      if (input.type === "email" && input.value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(input.value)) {
+          isValid = false;
+          highlightError(input);
+        }
+      }
+
+      // Validate phone numbers
+      if (input.type === "tel" && input.value) {
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(input.value)) {
+          isValid = false;
+          highlightError(input);
+        }
+      }
+    });
+
+    // Check if at least one board is selected
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    const isAnyChecked = Array.from(checkboxes).some((cb) => cb.checked);
+
+    if (!isAnyChecked) {
+      isValid = false;
+      showError("Please select at least one board");
+    }
+
+    return isValid;
+  }
+
+  function highlightError(input) {
+    input.style.borderBottomColor = "#ff6b6b";
+    input.addEventListener("input", function () {
+      removeError(input);
+    });
+  }
+
+  function removeError(input) {
+    input.style.borderBottomColor = "";
+  }
+
+  function showError(message) {
+    alert(message);
+  }
+
+  function submitForm() {
+    // Show success message
+    form.style.display = "none";
+    successMessage.style.display = "block";
+
+    // Add confetti animation
+    createConfetti();
+
+    // Optional: Submit form data via AJAX here
+    // fetch(form.action, { method: 'POST', body: new FormData(form) });
+  }
+
+  function createConfetti() {
+    // Simple confetti animation
+    for (let i = 0; i < 50; i++) {
+      const confetti = document.createElement("div");
+      confetti.style.cssText = `
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background: ${
+                  ["#d4af37", "#a5d6a7", "#cc5500"][
+                    Math.floor(Math.random() * 3)
+                  ]
+                };
+                left: ${Math.random() * 100}%;
+                top: -10px;
+                opacity: ${Math.random()};
+                transform: rotate(${Math.random() * 360}deg);
+                pointer-events: none;
+                z-index: 10000;
+            `;
+      document.body.appendChild(confetti);
+
+      confetti.animate(
+        [
+          { transform: "translateY(0) rotate(0deg)", opacity: 1 },
+          {
+            transform: `translateY(${window.innerHeight + 10}px) rotate(${
+              Math.random() * 720
+            }deg)`,
+            opacity: 0,
+          },
+        ],
+        {
+          duration: Math.random() * 2000 + 3000,
+          easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        }
+      );
+
+      setTimeout(() => confetti.remove(), 5000);
+    }
+  }
 
   function showSection(index) {
     // Hide all sections
@@ -766,3 +967,19 @@ console.log(
   "%cJoin our tribe and make a difference! 🍃",
   "font-size: 12px; color: #8f9779;"
 );
+
+// ===================================
+// BOARD SELECTION TOGGLE FUNCTION
+// ===================================
+function toggleBoard(card) {
+  const checkbox = card.querySelector('input[type="checkbox"]');
+
+  // Wait for event propagation
+  setTimeout(() => {
+    if (checkbox.checked) {
+      card.classList.add("selected");
+    } else {
+      card.classList.remove("selected");
+    }
+  }, 10);
+}

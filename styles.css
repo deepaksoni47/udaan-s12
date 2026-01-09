@@ -20,6 +20,7 @@
     /* Accent Colors */
     --tribal-red: #8b2e1f;
     --golden-amber: #d4a574;
+    --tribal-gold: #d4af37;
     --ivory: #f4f1de;
     --charcoal: #2b2b2b;
     
@@ -302,13 +303,35 @@ body {
     background-clip: text;
 }
 
+/* Hero Logo */
+.hero-logo {
+    margin-bottom: 0px;
+}
+
+.logo-image {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-20px) scale(1.05);
+    }
+}
+
 .season-badge {
     display: inline-block;
     padding: 15px 40px;
     background: var(--tribal-gradient);
     border: 3px solid var(--golden-amber);
     border-radius: 50px;
-    margin: 20px 0;
+    margin: 10px 0;
     box-shadow: var(--shadow-medium);
     position: relative;
     overflow: hidden;
@@ -602,15 +625,265 @@ blockquote p {
     padding: 100px 20px;
 }
 
+.form-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+}
+
 .form-container {
     max-width: 900px;
     margin: 0 auto;
-    background: rgba(26, 58, 26, 0.6);
-    backdrop-filter: blur(20px);
+    background: rgba(26, 58, 26, 0.5);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     padding: 60px;
     border-radius: 30px;
-    border: 2px solid rgba(198, 134, 66, 0.3);
-    box-shadow: var(--shadow-heavy);
+    border: 1px solid rgba(198, 134, 66, 0.25);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 30px;
+}
+
+.form-container form {
+    position: relative;
+    z-index: 1;
+}
+
+/* Section Headers */
+.section-header {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.section-header h3 {
+    font-family: var(--font-serif);
+    color: var(--tribal-gold);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.section-header p {
+    margin-top: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Form Row Grid */
+.form-row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+/* Input Groups */
+.input-group {
+    position: relative;
+    margin-bottom: 2.5rem;
+    z-index: 1;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 0;
+    font-family: var(--font-philosopher);
+    font-size: 1.1rem;
+    color: var(--ivory);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input-group label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    font-family: var(--font-philosopher);
+    color: rgba(240, 217, 181, 0.7);
+    pointer-events: none;
+    transition: 0.3s ease all;
+    z-index: 2;
+}
+
+.input-group input:focus,
+.input-group input:valid,
+.input-group select:focus,
+.input-group select:valid {
+    border-bottom-color: var(--tribal-gold);
+}
+
+.input-group input:focus ~ label,
+.input-group input:valid ~ label,
+.input-group select:focus ~ label,
+.input-group select:not([value=""]) ~ label {
+    top: -20px;
+    font-size: 0.85rem;
+    color: var(--tribal-gold);
+}
+
+/* Dropdown styling fix */
+.input-group select option {
+    background: var(--forest-deep);
+    color: white;
+}
+
+/* Board Selection Grid */
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.board-card-modern {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    cursor: pointer;
+    display: block;
+}
+
+.board-card-modern:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.board-card-modern.selected {
+    border-color: var(--tribal-gold);
+    background: rgba(212, 175, 55, 0.15);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.board-card-modern i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #a5d6a7;
+    transition: color 0.3s;
+    display: block;
+}
+
+.board-card-modern.selected i {
+    color: var(--tribal-gold);
+}
+
+.board-card-modern h4 {
+    font-family: var(--font-philosopher);
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    color: var(--ivory);
+    margin: 0;
+    padding: 0;
+}
+
+/* Hide actual checkbox */
+.board-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Submit Container */
+.submit-container {
+    margin-top: 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-submit {
+    background: transparent;
+    border: 1px solid var(--tribal-gold);
+    color: var(--tribal-gold);
+    padding: 1rem 3rem;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 0%; height: 100%;
+    background: var(--tribal-gold);
+    z-index: -1;
+    transition: all 0.4s ease;
+}
+
+.btn-submit:hover {
+    color: var(--forest-deep);
+    font-weight: bold;
+}
+
+.btn-submit:hover::before {
+    width: 100%;
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    padding: 3rem;
+    position: relative;
+    z-index: 2;
+    color: var(--ivory);
+}
+
+.success-icon {
+    font-size: 5rem;
+    color: var(--forest-light);
+    margin-bottom: 1.5rem;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.success-message h3 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--golden-amber);
+    margin-bottom: 1rem;
+}
+
+.success-message p {
+    font-size: 1.2rem;
+    color: var(--ivory);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .form-header {
@@ -782,6 +1055,8 @@ blockquote p {
 
 .form-group {
     margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .input-wrapper {
@@ -797,33 +1072,39 @@ blockquote p {
     color: var(--clay-ochre);
     transition: var(--transition-smooth);
     z-index: 1;
+    opacity: 0.7;
 }
 
-.input-wrapper input {
+.input-wrapper input,
+.select-wrapper select {
     width: 100%;
-    padding: 15px 15px 15px 40px;
-    background: rgba(45, 80, 22, 0.2);
+    padding: 12px 0 12px 35px;
+    background: transparent;
     border: none;
-    border-bottom: 2px solid rgba(198, 134, 66, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     color: var(--ivory);
     font-size: 1.1rem;
     font-family: var(--font-philosopher);
     transition: var(--transition-smooth);
-    border-radius: 5px 5px 0 0;
+    outline: none;
 }
 
-.input-wrapper input:focus {
-    outline: none;
-    background: rgba(45, 80, 22, 0.4);
+.input-wrapper input:focus,
+.input-wrapper input:valid {
     border-bottom-color: var(--golden-amber);
+}
+
+.input-wrapper input:focus ~ .input-icon {
+    color: var(--golden-amber);
+    opacity: 1;
 }
 
 .input-wrapper label {
     position: absolute;
-    left: 40px;
+    left: 35px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--sage-green);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 1rem;
     pointer-events: none;
     transition: var(--transition-smooth);
@@ -831,10 +1112,11 @@ blockquote p {
 
 .input-wrapper input:focus + label,
 .input-wrapper input:valid + label {
-    top: -10px;
+    top: -18px;
     left: 0;
     font-size: 0.85rem;
     color: var(--golden-amber);
+    transform: translateY(0);
 }
 
 .input-underline {
@@ -843,7 +1125,7 @@ blockquote p {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--earth-gradient);
+    background: linear-gradient(90deg, var(--golden-amber), var(--clay-ochre));
     transition: width 0.4s ease;
 }
 
@@ -858,23 +1140,25 @@ blockquote p {
 
 .select-wrapper select {
     width: 100%;
-    padding: 15px 40px 15px 40px;
-    background: rgba(45, 80, 22, 0.2);
+    padding: 12px 40px 12px 35px;
+    background: transparent;
     border: none;
-    border-bottom: 2px solid rgba(198, 134, 66, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     color: var(--ivory);
     font-size: 1.1rem;
     font-family: var(--font-philosopher);
     cursor: pointer;
     appearance: none;
     transition: var(--transition-smooth);
-    border-radius: 5px 5px 0 0;
+    outline: none;
 }
 
 .select-wrapper select:focus {
-    outline: none;
-    background: rgba(45, 80, 22, 0.4);
     border-bottom-color: var(--golden-amber);
+}
+
+.select-wrapper select:focus ~ .input-icon {
+    color: var(--golden-amber);
 }
 
 .select-wrapper select option {
@@ -889,7 +1173,7 @@ blockquote p {
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: var(--clay-ochre);
+    color: rgba(198, 134, 66, 0.7);
     font-size: 1rem;
 }
 
@@ -1209,6 +1493,10 @@ blockquote p {
         font-size: 3.5rem;
     }
     
+    .logo-image {
+        max-width: 350px;
+    }
+    
     .section-title {
         font-size: 2.5rem;
     }
@@ -1233,27 +1521,36 @@ blockquote p {
     
     /* Hero Section */
     .hero-section {
-        min-height: auto;
-        padding: 40px 15px;
+        min-height: 100vh;
+        padding: 60px 15px 40px;
+        justify-content: space-around;
     }
     
     .hero-title {
         font-size: 2.5rem;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .hero-logo {
+        margin-bottom: 40px;
     }
     
     .season-badge {
-        padding: 12px 30px;
-        margin: 15px 0;
+        padding: 15px 35px;
+        margin: 25px 0;
     }
     
     .season-number {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
     
     .hero-subtitle {
-        font-size: 1.3rem;
-        margin: 15px 0;
+        font-size: 1.4rem;
+        margin: 20px 0;
+    }
+    
+    .logo-image {
+        max-width: 350px;
     }
     
     .tribal-icon {
@@ -1368,13 +1665,181 @@ blockquote p {
         transform: scale(1) rotate(0deg);
     }
     
-    /* Disable unnecessary animations for performance */
+    /* Slow down animations for better mobile experience */
     * {
-        animation-duration: 0.5s !important;
+        animation-duration: 1.5s !important;
     }
-}    /* Registration Section */
-    .registration-section {
-        padding: 60px 15px;
+    
+    .logo-image {
+        animation-duration: 4s !important;
+    }
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - MOBILE (600px)
+   =================================== */
+@media (max-width: 600px) {
+    html {
+        font-size: 15px;
+    }
+    
+    body {
+        line-height: 1.5;
+    }
+    
+    .main-container {
+        padding: 10px;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+        padding: 50px 15px 40px;
+        min-height: 100vh;
+        justify-content: space-around;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    
+    .hero-logo {
+        margin-bottom: 35px;
+    }
+    
+    .logo-image {
+        max-width: 320px;
+    }
+    
+    .tribal-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+    
+    .season-badge {
+        padding: 12px 30px;
+        margin: 20px 0;
+        border: 2px solid var(--golden-amber);
+    }
+    
+    .season-number {
+        font-size: 1.4rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        margin: 18px 0;
+    }
+    
+    .theme-tagline {
+        font-size: 0.9rem;
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .theme-tagline i {
+        font-size: 1rem;
+    }
+    
+    /* Scroll Indicator */
+    .scroll-indicator {
+        bottom: 20px;
+        gap: 8px;
+    }
+    
+    .scroll-arrow {
+        width: 25px;
+        height: 40px;
+        border-width: 2px;
+    }
+    
+    .scroll-indicator span {
+        font-size: 0.75rem;
+    }
+    
+    /* Theme Section */
+    .theme-section {
+        padding: 40px 12px;
+        margin: 30px 0;
+        border-radius: 15px;
+    }
+    
+    .theme-header {
+        margin-bottom: 30px;
+    }
+    
+    .section-title {
+        font-size: 1.7rem;
+        margin-bottom: 8px;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    
+    .tribal-divider {
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .divider-symbol {
+        font-size: 1.2rem;
+    }
+    
+    .divider-line {
+        width: 50px;
+        height: 1.5px;
+    }
+    
+    .theme-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .theme-card {
+        padding: 25px;
+    }
+    
+    .card-icon {
+        font-size: 2.5rem;
+    }
+    
+    .theme-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+    
+    .theme-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    /* Quote Section */
+    .quote-section {
+        padding: 30px 20px;
+        border-width: 2px;
+        border-radius: 15px;
+        margin-top: 30px;
+    }
+    
+    blockquote {
+        text-align: center;
+    }
+    
+    blockquote p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    blockquote .fa-quote-left,
+    blockquote .fa-quote-right {
+        font-size: 1.2rem;
+        margin: 10px 0;
     }
     
     .form-container {
@@ -1511,6 +1976,27 @@ blockquote p {
     
     .sound-toggle:hover {
         transform: scale(1.05) rotate(15deg);
+    }
+    
+    /* Slow down all animations on mobile */
+    .logo-image {
+        animation-duration: 5s !important;
+    }
+    
+    .tribal-icon {
+        animation-duration: 4s !important;
+    }
+    
+    .leaf {
+        animation-duration: 20s !important;
+    }
+    
+    .tribal-pattern {
+        animation-duration: 30s !important;
+    }
+    
+    [data-aos] {
+        transition-duration: 1s !important;
     }
 }
 
@@ -1854,12 +2340,21 @@ blockquote p {
     
     /* Hero Section */
     .hero-section {
-        padding: 25px 8px;
+        padding: 40px 15px 30px;
+        min-height: 100vh;
     }
     
     .hero-title {
         font-size: 1.8rem;
-        margin-bottom: 12px;
+        margin-bottom: 18px;
+    }
+    
+    .hero-logo {
+        margin-bottom: 30px;
+    }
+    
+    .logo-image {
+        max-width: 280px;
     }
     
     .tribal-icon {
@@ -1868,17 +2363,17 @@ blockquote p {
     }
     
     .season-badge {
-        padding: 8px 20px;
-        margin: 10px 0;
+        padding: 10px 25px;
+        margin: 18px 0;
     }
     
     .season-number {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
     
     .hero-subtitle {
-        font-size: 1rem;
-        margin: 10px 0;
+        font-size: 1.1rem;
+        margin: 15px 0;
     }
     
     .theme-tagline {
@@ -1996,6 +2491,15 @@ blockquote p {
         right: 10px;
         font-size: 1rem;
     }
+    
+    /* Further slow down animations on smaller screens */
+    .logo-image {
+        animation-duration: 6s !important;
+    }
+    
+    .tribal-icon {
+        animation-duration: 5s !important;
+    }
 }
 
 /* ===================================
@@ -2010,8 +2514,16 @@ blockquote p {
         font-size: 1.6rem;
     }
     
+    .logo-image {
+        max-width: 240px;
+    }
+    
+    .hero-logo {
+        margin-bottom: 25px;
+    }
+    
     .season-number {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .section-title {
