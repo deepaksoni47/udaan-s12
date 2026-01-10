@@ -8,6 +8,7 @@
 // ===================================
 document.addEventListener("DOMContentLoaded", function () {
   initParticles();
+  initTribalLoader();
   initAOS();
   initTyped();
   initTilt();
@@ -1535,6 +1536,19 @@ function initHeroTyping() {
       if (i >= text.length) clearInterval(interval);
     }, speed);
   }, 150);
+}
+
+// Initialize tribal loader (preloader)
+function initTribalLoader() {
+  // Hide loader shortly after window load to ensure assets are ready
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("tribal-loader");
+    if (!loader) return;
+    // give a short grace period then hide
+    setTimeout(() => {
+      loader.classList.add("hidden");
+    }, 1400);
+  });
 }
 
 // ===================================

@@ -100,9 +100,92 @@ body {
 }
 
 /* ===================================
+   TRIBAL LOADER
+   =================================== */
+#tribal-loader {
+    position: fixed;
+    inset: 0;
+    /* Light-themed background (warm cream with sage vignette) */
+    background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.95), rgba(245,250,240,0.95) 30%), linear-gradient(135deg, var(--forest-light) 0%, #ffffff 100%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sage-green);
+    font-family: 'Cinzel', serif;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#tribal-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-content {
+    text-align: center;
+    width: 280px;
+}
+
+.loader-symbol {
+    width: 64px;
+    margin-bottom: 14px;
+    color: var(--sage-green);
+    animation: slowRotate 8s linear infinite;
+}
+
+.loader-text {
+    color: var(--sage-green);
+}
+
+.loader-subtext {
+    color: var(--tribal-gold);
+}
+
+@keyframes slowRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.loader-text {
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    color: var(--golden-amber);
+}
+
+.loader-subtext {
+    font-family: var(--font-philosopher);
+    font-size: 0.85rem;
+    color: rgba(212,175,55,0.9);
+    margin-bottom: 12px;
+}
+
+.loader-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(212,175,55,0.12);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.loader-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--moss-green), var(--tribal-gold));
+    animation: fillBar 2.5s ease-in-out infinite;
+}
+
+@keyframes fillBar {
+    0% { width: 0%; }
+    50% { width: 80%; }
+    100% { width: 100%; }
+}
+
+/* ===================================
    PARTICLES BACKGROUND
    =================================== */
-#particles-js {
+#particles-js { 
     position: fixed;
     width: 100%;
     height: 100%;
@@ -643,7 +726,7 @@ body {
 /* Quote Section */
 .quote-section {
     background: linear-gradient(135deg, rgba(232, 245, 233, 0.7), rgba(241, 248, 233, 0.7));
-    padding: 60px 40px;
+    padding: 40px 20px;
     border-radius: 20px;
     border: 3px solid var(--tribal-gold);
     box-shadow: var(--shadow-heavy);
@@ -695,7 +778,7 @@ blockquote .fa-quote-right {
 }
 
 blockquote p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--ivory);
     font-style: italic;
     line-height: 1.8;
@@ -783,6 +866,96 @@ blockquote p {
     z-index: 1;
 }
 
+/* Small helper/hint text for forms */
+.helper-text {
+    display: block;
+    font-size: 0.95rem;
+    color: rgba(77, 87, 96, 0.5);
+    margin-top: 0.35rem;
+}
+
+/* Modern toggle switch (Same as mobile) - compact */
+.toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.toggle-row.compact .switch {
+    width: 44px;
+    height: 24px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(44,62,80,0.08);
+    border-radius: 999px;
+    border: 1px solid rgba(44,62,80,0.06);
+    transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.switch-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    border-radius: 50%;
+    background: var(--forest-mid);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    transition: transform 180ms ease, background 180ms ease;
+}
+
+.switch input:checked + .switch-slider {
+    background: linear-gradient(90deg, var(--tribal-gold), var(--clay-ochre));
+    border-color: var(--golden-amber);
+    box-shadow: 0 6px 18px rgba(88,139,47,0.12);
+}
+
+.toggle-row.compact .switch input:checked + .switch-slider::before {
+    transform: translateX(18px);
+    background: var(--ivory);
+}
+
+.switch input:focus + .switch-slider {
+    box-shadow: 0 0 0 6px rgba(85,139,47,0.08);
+}
+
+.switch-label {
+    color: rgba(44,62,80,0.85);
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+/* Disabled input appearance (for WhatsApp when auto-filled) */
+.input-group input:disabled {
+    background: rgba(232,245,233,0.15);
+    border-bottom-color: rgba(44,62,80,0.04);
+    opacity: 0.95;
+}
+
+
 .input-group input,
 .input-group select {
     width: 100%;
@@ -849,6 +1022,18 @@ blockquote p {
     top: -20px;
     font-size: 0.85rem;
     color: var(--tribal-gold);
+}
+
+/* Hide placeholders by default and show only on focus to avoid visual clutter */
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: transparent;
+    transition: color 0.15s ease;
+}
+
+.input-group input:focus::placeholder,
+.input-group textarea:focus::placeholder {
+    color: rgba(44, 62, 80, 0.45); /* subtle visible placeholder on focus */
 }
 
 /* Invalid field styles */
@@ -1823,6 +2008,12 @@ blockquote p {
     .theme-tagline i {
         font-size: 1.2rem;
     }
+
+    /* Stack form row grid for tablets and smaller so Course/Dept and Email/Mobile appear one below another */
+    .form-row-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
     
     /* Scroll Indicator */
     .scroll-indicator {
@@ -2008,6 +2199,12 @@ blockquote p {
     
     .theme-tagline i {
         font-size: 1rem;
+    }
+
+    /* Keep Course/Department and Email/Mobile side-by-side on small phones */
+    .form-row-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
     }
     
     /* Scroll Indicator */
@@ -2741,6 +2938,12 @@ blockquote p {
     .form-container {
         padding: 25px 12px;
         border-radius: 12px;
+    }
+
+    /* Stack form row grid on very small screens so fields appear one per line */
+    .form-row-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
     
     .form-title {
