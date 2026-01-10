@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initTyped();
   initTilt();
   initCountdownTimer();
+  initHeroTyping();
   // Only initialize form-related logic when the registration form exists on the page
   if (document.getElementById("registrationForm")) {
     initFormLogic();
@@ -1359,6 +1360,58 @@ function initCountdownTimer() {
 
   // Update every second
   setInterval(updateCountdown, 1000);
+}
+
+// ===================================
+// HERO SUBTITLE TYPING
+// ===================================
+function initHeroTyping() {
+  const el = document.getElementById("heroSubtitle");
+  if (!el) return;
+
+  const text = el.textContent.trim();
+  el.textContent = "";
+
+  // Delay slightly to ensure external libs initialize and element is painted
+  setTimeout(() => {
+    // Prefer TypeIt if available
+    if (typeof TypeIt !== "undefined") {
+      new TypeIt("#heroSubtitle", {
+        strings: text,
+        speed: 70,
+        cursor: true,
+        waitUntilVisible: true,
+        lifeLike: true,
+        breakLines: false,
+        afterComplete: function (instance) {
+          instance.destroy();
+        },
+      }).go();
+      return;
+    }
+
+    // Fallback to Typed.js if available
+    if (typeof Typed !== "undefined") {
+      new Typed("#heroSubtitle", {
+        strings: [text],
+        typeSpeed: 70,
+        showCursor: true,
+        onComplete: function () {
+          // Keep the final text
+        },
+      });
+      return;
+    }
+
+    // Final fallback - simple manual typer
+    let i = 0;
+    const speed = 70;
+    const interval = setInterval(() => {
+      el.textContent += text.charAt(i);
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+  }, 150);
 }
 
 // ===================================

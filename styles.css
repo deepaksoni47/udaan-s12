@@ -465,7 +465,8 @@ body {
 
 .theme-tagline i {
     font-size: 1.5rem;
-    animation: bounce 2s ease-in-out infinite;
+    /* Disable animation for tagline icons */
+    animation: none;
 }
 
 @keyframes bounce {
