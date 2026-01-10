@@ -289,9 +289,9 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 40px 20px;
+    padding: 0 20px 40px;
     position: relative;
-}
+} 
 
 .hero-content {
     max-width: 900px;
@@ -1053,6 +1053,7 @@ blockquote p {
 @media (max-width: 768px) {
     .countdown-container {
         margin-top: 2rem;
+        margin-bottom: 2rem;
         padding: 1.5rem;
     }
 
@@ -1769,7 +1770,7 @@ blockquote p {
     /* Hero Section */
     .hero-section {
         min-height: 100vh;
-        padding: 60px 15px 40px;
+        padding: 0 15px 40px;
         justify-content: space-around;
     }
     
@@ -1779,7 +1780,7 @@ blockquote p {
     }
     
     .hero-logo {
-        margin-bottom: 40px;
+        margin-bottom: 0;
     }
     
     .season-badge {
@@ -1946,7 +1947,7 @@ blockquote p {
     
     /* Hero Section */
     .hero-section {
-        padding: 50px 15px 40px;
+        padding: 0 15px 40px;
         min-height: 100vh;
         justify-content: space-around;
     }
@@ -1962,7 +1963,7 @@ blockquote p {
     }
     
     .hero-logo {
-        margin-bottom: 35px;
+        margin-bottom: 0;
     }
     
     .logo-image {
@@ -1974,15 +1975,19 @@ blockquote p {
         margin-bottom: 15px;
     }
     
+    .hero-ctas {
+        gap: 0.5rem; /* tighter vertical spacing on phones */
+    }
+
     .season-badge {
-        padding: 12px 30px;
-        margin: 20px 0;
+        padding: 10px 26px;
+        margin: 8px 0;
         border: 2px solid var(--golden-amber);
     }
 
     .cta-secondary {
-        padding: 12px 30px;
-        margin: 20px 0;
+        padding: 10px 26px;
+        margin: 8px 0;
         font-size: 1.4rem;
     }
     
@@ -2290,7 +2295,7 @@ blockquote p {
     
     /* Hero Section */
     .hero-section {
-        padding: 25px 10px;
+        padding: 0 10px;
         min-height: auto;
     }
     
@@ -2309,17 +2314,21 @@ blockquote p {
         margin-bottom: 15px;
     }
     
+    .hero-ctas {
+        gap: 0.5rem; /* tighter vertical spacing on extra-small phones */
+    }
+
     .season-badge {
-        padding: 12px 30px;
-        margin: 12px 0;
+        padding: 10px 26px;
+        margin: 6px 0;
         border: 2px solid var(--tribal-gold);
         cursor: pointer;
     }
 
     .cta-secondary {
-        padding: 12px 30px;
-        margin: 12px 0;
-        font-size: 1.5rem;
+        padding: 10px 26px;
+        margin: 6px 0;
+        font-size: 1.45rem;
     }
     
     .season-number {
@@ -2642,7 +2651,7 @@ blockquote p {
     }
     
     .hero-logo {
-        margin-bottom: 30px;
+        margin-bottom: 0px;
     }
     
     .logo-image {
@@ -2817,7 +2826,7 @@ blockquote p {
     }
     
     .hero-logo {
-        margin-bottom: 25px;
+        margin-bottom: 0x;
     }
     
     .season-number {
