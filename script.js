@@ -11,9 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
   initAOS();
   initTyped();
   initTilt();
-  initFormLogic();
+  initCountdownTimer();
+  // Only initialize form-related logic when the registration form exists on the page
+  if (document.getElementById("registrationForm")) {
+    initFormLogic();
+    initProgressTracking();
+  }
   initSoundToggle();
-  initProgressTracking();
 });
 
 // ===================================
@@ -389,6 +393,308 @@ function initSoundToggle() {
       oscillator = null;
     }
   }
+}
+
+// ===================================
+// FORM VALIDATION & LOGIC
+// ===================================
+function initFormLogic() {
+  const form = document.getElementById("registrationForm");
+  const errorBox = document.getElementById("formError");
+  if (!form) return;
+
+  // disable native validation so we can show custom messages
+  form.setAttribute("novalidate", "true");
+
+  // enforce numeric-only input for phone fields on input
+  const phoneFields = [
+    document.getElementById("mobileInput"),
+    document.getElementById("whatsappInput"),
+  ];
+  phoneFields.forEach((f) => {
+    if (!f) return;
+    // ensure mobile keyboard on supporting devices
+    f.setAttribute("inputmode", "numeric");
+    f.setAttribute("maxlength", "10");
+    // strip any non-digit characters on input (fallback)
+    f.addEventListener("input", () => {
+      const cleaned = f.value.replace(/\D/g, "").slice(0, 10);
+      if (f.value !== cleaned) f.value = cleaned;
+    });
+
+    // Extra guards: block non-digits on keypress/keyup
+    f.addEventListener("keypress", (e) => {
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+
+    f.addEventListener("keyup", () => {
+      const cleaned = f.value.replace(/\D/g, "").slice(0, 10);
+      if (f.value !== cleaned) f.value = cleaned;
+    });
+
+    // Block non-digit keystrokes at keydown level (extra guard)
+    f.addEventListener("keydown", (e) => {
+      // Allow control keys
+      const ctrlKeys = [
+        "Backspace",
+        "Delete",
+        "ArrowLeft",
+        "ArrowRight",
+        "Tab",
+        "Home",
+        "End",
+      ];
+      if (ctrlKeys.includes(e.key)) return;
+      // Allow digits only
+      if (!/^[0-9]$/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+
+    // Prevent non-digit characters from being inserted (better UX on mobile)
+    f.addEventListener("beforeinput", (e) => {
+      // some browsers provide e.data for the inserted text
+      const data = e.data;
+      if (data && /\D/.test(data)) {
+        e.preventDefault();
+      }
+      // if the inputType is insertFromPaste, allow paste handler to clean
+    });
+
+    // Clean pasted content
+    f.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData("text");
+      const cleaned = (text || "").replace(/\D/g, "").slice(0, 10);
+      // insert cleaned content at cursor position
+      const start = f.selectionStart || 0;
+      const end = f.selectionEnd || 0;
+      const newVal = (f.value.slice(0, start) + cleaned + f.value.slice(end))
+        .replace(/\D/g, "")
+        .slice(0, 10);
+      f.value = newVal;
+      // move caret
+      const pos = Math.min(start + cleaned.length, 10);
+      f.setSelectionRange(pos, pos);
+      // trigger input event handlers
+      const ev = new Event("input", { bubbles: true });
+      f.dispatchEvent(ev);
+    });
+  });
+
+  // Helpers for inline invalid state
+  function markInvalid(el) {
+    if (!el) return;
+    el.classList.add("invalid");
+    const lbl = el.parentElement && el.parentElement.querySelector("label");
+    if (lbl) lbl.classList.add("invalid");
+  }
+
+  function clearInvalid(el) {
+    if (!el) return;
+    el.classList.remove("invalid");
+    const lbl = el.parentElement && el.parentElement.querySelector("label");
+    if (lbl) lbl.classList.remove("invalid");
+  }
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  function isValidPhone(v) {
+    return /^\d{10}$/.test(v);
+  }
+
+  const boardGrid = document.getElementById("boardGrid");
+  const fullnameField = document.getElementById("fullnameInput");
+  const emailField = document.getElementById("emailInput");
+  const mobileField = document.getElementById("mobileInput");
+  const whatsappField = document.getElementById("whatsappInput");
+  const courseField = document.getElementById("courseInput");
+  const deptField = document.getElementById("departmentInput");
+  const semesterField = document.getElementById("semesterSelect");
+
+  // Allowed character sets and max lengths per field
+  const fieldConstraints = [
+    { el: fullnameField, allowed: /[A-Za-z .'-]/, max: 60 },
+    { el: courseField, allowed: /[A-Za-z0-9 &().,'-]/, max: 50 },
+    { el: deptField, allowed: /[A-Za-z0-9 &().,'-]/, max: 60 },
+    { el: emailField, allowed: /[A-Za-z0-9@._+-]/, max: 100 },
+  ];
+
+  fieldConstraints.forEach(({ el, allowed, max }) => {
+    if (!el) return;
+    el.setAttribute("maxlength", String(max));
+    el.addEventListener("beforeinput", (e) => {
+      const data = e.data;
+      if (data && !allowed.test(data)) {
+        e.preventDefault();
+      }
+    });
+    el.addEventListener("input", () => {
+      const cleaned = (el.value || "")
+        .split("")
+        .filter((ch) => allowed.test(ch))
+        .join("")
+        .slice(0, max);
+      if (el.value !== cleaned) el.value = cleaned;
+      clearError();
+    });
+  });
+
+  // Real-time validation listeners
+  if (fullnameField)
+    fullnameField.addEventListener("input", () => {
+      if (fullnameField.value.trim()) clearInvalid(fullnameField);
+      else markInvalid(fullnameField);
+      clearError();
+    });
+
+  if (emailField)
+    emailField.addEventListener("input", () => {
+      if (isValidEmail(emailField.value.trim())) clearInvalid(emailField);
+      else if (emailField.value.trim().length) markInvalid(emailField);
+      else clearInvalid(emailField);
+      clearError();
+    });
+
+  [mobileField, whatsappField].forEach((f) => {
+    if (!f) return;
+    f.addEventListener("input", () => {
+      if (isValidPhone(f.value.trim())) clearInvalid(f);
+      else if (f.value.trim().length) markInvalid(f);
+      else clearInvalid(f);
+      clearError();
+    });
+  });
+
+  if (courseField)
+    courseField.addEventListener("input", () => {
+      if (courseField.value.trim()) clearInvalid(courseField);
+      else markInvalid(courseField);
+      clearError();
+    });
+
+  if (deptField)
+    deptField.addEventListener("input", () => {
+      if (deptField.value.trim()) clearInvalid(deptField);
+      else markInvalid(deptField);
+      clearError();
+    });
+
+  if (semesterField)
+    semesterField.addEventListener("change", () => {
+      if (semesterField.value) clearInvalid(semesterField);
+      else markInvalid(semesterField);
+      clearError();
+    });
+
+  // Board checkbox listener
+  document.querySelectorAll('input[name="boards[]"]').forEach((cb) => {
+    cb.addEventListener("change", () => {
+      if (
+        document.querySelectorAll('input[name="boards[]"]:checked').length > 0
+      ) {
+        if (boardGrid) boardGrid.classList.remove("invalid");
+        clearError();
+      }
+    });
+  });
+
+  function showError(message, el) {
+    if (errorBox) {
+      errorBox.style.display = "block";
+      errorBox.textContent = message;
+    }
+    if (el) {
+      // mark invalid on the element and focus if possible
+      if (el.classList) el.classList.add("invalid");
+      if (el.focus && typeof el.focus === "function") el.focus();
+    }
+    // if message relates to boards selection, highlight board grid
+    if (message && message.toLowerCase().includes("board")) {
+      if (boardGrid) boardGrid.classList.add("invalid");
+    }
+  }
+
+  function clearError() {
+    if (errorBox) {
+      errorBox.style.display = "none";
+      errorBox.textContent = "";
+    }
+    // remove invalid classes from inputs and labels
+    form
+      .querySelectorAll(".invalid")
+      .forEach((el) => el.classList.remove("invalid"));
+    if (boardGrid) boardGrid.classList.remove("invalid");
+  }
+
+  form.addEventListener("submit", function (e) {
+    clearError();
+
+    const fullname = document.getElementById("fullnameInput");
+    const email = document.getElementById("emailInput");
+    const mobile = document.getElementById("mobileInput");
+    const whatsapp = document.getElementById("whatsappInput");
+    const course = document.getElementById("courseInput");
+    const department = document.getElementById("departmentInput");
+    const semester = document.getElementById("semesterSelect");
+    const boards = document.querySelectorAll('input[name="boards[]"]:checked');
+
+    // basic checks
+    if (!fullname || !fullname.value.trim()) {
+      e.preventDefault();
+      showError("Please enter your full name.", fullname);
+      return;
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      e.preventDefault();
+      showError("Please enter a valid university email address.", email);
+      return;
+    }
+
+    const phonePattern = /^\d{10}$/;
+    if (!mobile || !phonePattern.test(mobile.value.trim())) {
+      e.preventDefault();
+      showError("Please enter a valid 10-digit mobile number.", mobile);
+      return;
+    }
+
+    if (!whatsapp || !phonePattern.test(whatsapp.value.trim())) {
+      e.preventDefault();
+      showError("Please enter a valid 10-digit WhatsApp number.", whatsapp);
+      return;
+    }
+
+    if (!course || !course.value.trim()) {
+      e.preventDefault();
+      showError("Please enter your course.", course);
+      return;
+    }
+
+    if (!department || !department.value.trim()) {
+      e.preventDefault();
+      showError("Please enter your department.", department);
+      return;
+    }
+
+    if (!semester || !semester.value) {
+      e.preventDefault();
+      showError("Please select your current semester.", semester);
+      return;
+    }
+
+    if (!boards || boards.length === 0) {
+      e.preventDefault();
+      showError("Please select at least one board to audition for.");
+      return;
+    }
+
+    // If we reach here, allow submission to continue
+  });
 }
 
 // ===================================
@@ -824,6 +1130,8 @@ function initFormLogic() {
 function initProgressTracking() {
   const form = document.getElementById("registrationForm");
   const progressFill = document.getElementById("progressFill");
+  // If form or progress element are missing, skip progress tracking
+  if (!form || !progressFill) return;
 
   // Update progress based on form completion
   form.addEventListener("input", updateProgress);
@@ -851,8 +1159,8 @@ function initProgressTracking() {
       totalFields++;
     }
 
-    const progress = (filledFields / totalFields) * 100;
-    progressFill.style.width = progress + "%";
+    const progress = totalFields === 0 ? 0 : (filledFields / totalFields) * 100;
+    if (progressFill) progressFill.style.width = progress + "%";
   }
 }
 
@@ -934,44 +1242,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 });
 
 // ===================================
-// CUSTOM CURSOR EFFECT (OPTIONAL)
-// ===================================
-const cursor = document.createElement("div");
-cursor.className = "custom-cursor";
-cursor.style.cssText = `
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #c68642;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    transition: transform 0.2s ease;
-    display: none;
-`;
-
-document.body.appendChild(cursor);
-
-document.addEventListener("mousemove", (e) => {
-  cursor.style.left = e.clientX - 10 + "px";
-  cursor.style.top = e.clientY - 10 + "px";
-  cursor.style.display = "block";
-});
-
-// Enlarge cursor on interactive elements
-document
-  .querySelectorAll("a, button, input, select, .board-card")
-  .forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      cursor.style.transform = "scale(1.5)";
-      cursor.style.borderColor = "#d4a574";
-    });
-
-    el.addEventListener("mouseleave", () => {
-      cursor.style.transform = "scale(1)";
-      cursor.style.borderColor = "#c68642";
-    });
-  });
 
 // ===================================
 // ADD CSS ANIMATIONS DYNAMICALLY
@@ -1034,6 +1304,62 @@ console.log(
   "%cJoin our tribe and make a difference! 🍃",
   "font-size: 12px; color: #8f9779;"
 );
+
+// ===================================
+// COUNTDOWN TIMER INITIALIZATION
+// ===================================
+function initCountdownTimer() {
+  // Set registration close date - Change this to your desired deadline
+  // Format: new Date('YYYY-MM-DD HH:mm:ss')
+  const registrationDeadline = new Date("2026-02-15 23:59:59").getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = registrationDeadline - now;
+
+    if (distance < 0) {
+      // Countdown finished
+      document.getElementById("days").textContent = "00";
+      document.getElementById("hours").textContent = "00";
+      document.getElementById("minutes").textContent = "00";
+      document.getElementById("seconds").textContent = "00";
+
+      // Optional: Change label to indicate registration closed
+      const label = document.querySelector(".countdown-label");
+      if (label) label.textContent = "Registrations Closed";
+      return;
+    }
+
+    // Calculate time units
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Update DOM
+    document.getElementById("days").textContent = String(days).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("minutes").textContent = String(minutes).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("seconds").textContent = String(seconds).padStart(
+      2,
+      "0"
+    );
+  }
+
+  // Initial update
+  updateCountdown();
+
+  // Update every second
+  setInterval(updateCountdown, 1000);
+}
 
 // ===================================
 // BOARD SELECTION TOGGLE FUNCTION
