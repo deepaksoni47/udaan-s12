@@ -708,6 +708,110 @@ function initFormLogic() {
   const whatsappInput = document.getElementById("whatsappInput");
   const sameAsPhoneCheckbox = document.getElementById("sameAsPhone");
 
+  // Helper to manage floating labels when field has content
+  function updateFilledState(el) {
+    if (!el) return;
+    const hasValue = (el.value || "").toString().trim().length > 0;
+    if (hasValue) {
+      el.classList.add("filled");
+      const grp = el.closest(".input-group");
+      if (grp) grp.classList.add("filled");
+    } else {
+      el.classList.remove("filled");
+      const grp = el.closest(".input-group");
+      if (grp) grp.classList.remove("filled");
+    }
+  }
+
+  // Attach listeners to inputs, textareas and selects to toggle .filled
+  Array.from(
+    form.querySelectorAll(
+      ".input-group input, .input-group textarea, .input-group select"
+    )
+  ).forEach((el) => {
+    // initialize state
+    updateFilledState(el);
+    // update on input/change/blur
+    el.addEventListener("input", () => updateFilledState(el));
+    el.addEventListener("change", () => updateFilledState(el));
+    el.addEventListener("blur", () => updateFilledState(el));
+  });
+
+  const boardGrid = document.getElementById("boardGrid");
+
+  // Create a small helper to render inline error text like Bootstrap's invalid feedback
+  function ensureErrorElement(input) {
+    if (!input) return null;
+    const parent = input.closest(".input-group") || input.parentElement;
+    if (!parent) return null;
+    let errorEl = parent.querySelector(".field-error");
+    if (!errorEl) {
+      errorEl = document.createElement("div");
+      errorEl.className = "field-error";
+      parent.appendChild(errorEl);
+    }
+    return errorEl;
+  }
+
+  function setFieldError(input, message) {
+    const errorEl = ensureErrorElement(input);
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.style.display = "block";
+    }
+    if (input) input.classList.add("invalid");
+  }
+
+  function clearFieldError(input) {
+    if (!input) return;
+    const parent = input.closest(".input-group") || input.parentElement;
+    const errorEl = parent && parent.querySelector(".field-error");
+    if (errorEl) {
+      errorEl.textContent = "";
+      errorEl.style.display = "none";
+    }
+    input.classList.remove("invalid");
+  }
+
+  // Board specific inline error
+  const boardErrorEl = (() => {
+    if (!boardGrid) return null;
+    let el = boardGrid.parentElement.querySelector(".field-error");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "field-error";
+      boardGrid.insertAdjacentElement("afterend", el);
+    }
+    return el;
+  })();
+
+  function setBoardError(message) {
+    if (boardErrorEl) {
+      boardErrorEl.textContent = message;
+      boardErrorEl.style.display = "block";
+    }
+    if (boardGrid) boardGrid.classList.add("invalid");
+  }
+
+  function clearBoardError() {
+    if (boardErrorEl) {
+      boardErrorEl.textContent = "";
+      boardErrorEl.style.display = "none";
+    }
+    if (boardGrid) boardGrid.classList.remove("invalid");
+  }
+
+  // Clear board error inline when a choice is made
+  const boardCheckboxes = form.querySelectorAll(
+    'input[type="checkbox"].board-checkbox'
+  );
+  boardCheckboxes.forEach((cb) => {
+    cb.addEventListener("change", () => {
+      const anyChecked = Array.from(boardCheckboxes).some((c) => c.checked);
+      if (anyChecked) clearBoardError();
+    });
+  });
+
   // Auto-fill WhatsApp number when checkbox is checked
   if (sameAsPhoneCheckbox && mobileInput && whatsappInput) {
     sameAsPhoneCheckbox.addEventListener("change", function () {
@@ -717,13 +821,17 @@ function initFormLogic() {
       } else {
         whatsappInput.disabled = false;
       }
+      // Ensure label floats properly even when input is disabled
+      updateFilledState(whatsappInput);
     });
 
     // Also update WhatsApp when mobile number changes (if checkbox is checked)
     mobileInput.addEventListener("input", function () {
       if (sameAsPhoneCheckbox.checked) {
         whatsappInput.value = this.value;
+        updateFilledState(whatsappInput);
       }
+      updateFilledState(mobileInput);
     });
   }
 
@@ -737,21 +845,25 @@ function initFormLogic() {
   });
 
   function validateForm() {
-    const inputs = form.querySelectorAll("input[required], select[required]");
+    const inputs = form.querySelectorAll(
+      "input[required], select[required], textarea[required]"
+    );
     let isValid = true;
-    let errorMessages = [];
+    const errorMessages = [];
 
     inputs.forEach((input) => {
+      const label = input.parentElement.querySelector("label");
+      const fieldName = label
+        ? label.textContent.replace("*", "").trim()
+        : "This field";
+
+      clearFieldError(input);
+
       if (!input.value.trim() && input.type !== "checkbox") {
         isValid = false;
-        highlightError(input);
-        const label = input.parentElement.querySelector("label");
-        if (label)
-          errorMessages.push(
-            label.textContent.replace("*", "").trim() + " is required."
-          );
-      } else {
-        removeError(input);
+        highlightError(input, `${fieldName} is required.`);
+        errorMessages.push(`${fieldName} is required.`);
+        return;
       }
 
       // Validate email
@@ -759,7 +871,7 @@ function initFormLogic() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(input.value)) {
           isValid = false;
-          highlightError(input);
+          highlightError(input, "Please enter a valid email address.");
           errorMessages.push("Please enter a valid email address.");
         }
       }
@@ -769,7 +881,7 @@ function initFormLogic() {
         const phoneRegex = /^[0-9]{10}$/;
         if (!phoneRegex.test(input.value)) {
           isValid = false;
-          highlightError(input);
+          highlightError(input, "Phone numbers must be 10 digits.");
           errorMessages.push("Phone numbers must be 10 digits.");
         }
       }
@@ -781,8 +893,10 @@ function initFormLogic() {
     );
     const isAnyChecked = Array.from(checkboxes).some((cb) => cb.checked);
 
+    clearBoardError();
     if (!isAnyChecked) {
       isValid = false;
+      setBoardError("Please select at least one board.");
       errorMessages.push("Please select at least one board.");
     }
 
@@ -801,15 +915,22 @@ function initFormLogic() {
     return isValid;
   }
 
-  function highlightError(input) {
+  function highlightError(input, message) {
+    if (!input) return;
     input.style.borderBottomColor = "#ff6b6b";
-    input.addEventListener("input", function () {
+    input.classList.add("invalid");
+    if (message) setFieldError(input, message);
+    const onInput = () => {
       removeError(input);
-    });
+      input.removeEventListener("input", onInput);
+    };
+    input.addEventListener("input", onInput);
   }
 
   function removeError(input) {
+    if (!input) return;
     input.style.borderBottomColor = "";
+    clearFieldError(input);
   }
 
   // No longer use alert, errors are shown inline
@@ -1138,7 +1259,9 @@ function initProgressTracking() {
   form.addEventListener("input", updateProgress);
 
   function updateProgress() {
-    const inputs = form.querySelectorAll("input[required], select[required]");
+    const inputs = form.querySelectorAll(
+      "input[required], select[required], textarea[required]"
+    );
     const checkboxes = form.querySelectorAll('input[type="checkbox"]');
 
     let totalFields = inputs.length;
