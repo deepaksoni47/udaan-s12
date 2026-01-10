@@ -165,9 +165,14 @@ function initTilt() {
     );
   };
 
+  // Prefer feature-detection for hover support: only initialize tilt where hover is available
+  const supportsHover = () =>
+    window.matchMedia &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
   if (typeof VanillaTilt !== "undefined") {
-    // Only apply tilt and glare on desktop
-    if (!isMobileDevice()) {
+    // Only apply tilt and glare on devices that actually support hover (desktop / pointer: fine)
+    if (supportsHover()) {
       // Tilt effect on theme cards (desktop only)
       VanillaTilt.init(document.querySelectorAll(".theme-card"), {
         max: 10,
@@ -195,13 +200,14 @@ function initTilt() {
         perspective: 1000,
       });
     } else {
-      // On mobile, disable tilt/glare by removing the data attributes
+      // On touch or non-hover devices, disable tilt/glare by removing the data attributes
       document.querySelectorAll("[data-tilt]").forEach((el) => {
         el.removeAttribute("data-tilt");
         el.removeAttribute("data-tilt-glare");
         el.removeAttribute("data-tilt-max");
         el.removeAttribute("data-tilt-speed");
       });
+      // Any inline transforms applied earlier will be neutralized by CSS rule for (hover: none)
     }
   }
 }
@@ -1436,7 +1442,7 @@ console.log(
 function initCountdownTimer() {
   // Set registration close date - Change this to your desired deadline
   // Format: new Date('YYYY-MM-DD HH:mm:ss')
-  const registrationDeadline = new Date("2026-02-15 23:59:59").getTime();
+  const registrationDeadline = new Date("2026-01-31 23:59:59").getTime();
 
   function updateCountdown() {
     const now = new Date().getTime();

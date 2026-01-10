@@ -790,7 +790,7 @@ blockquote p {
    REGISTRATION SECTION
    =================================== */
 .registration-section {
-    padding: 60px 20px;
+    padding: 60px 0;
 }
 
 .form-wrapper {
@@ -2244,6 +2244,14 @@ blockquote p {
     .sound-toggle:hover {
         transform: scale(1) rotate(0deg);
     }
+
+    /* Disable any tilt / transform artifacts for the registration form on touch devices */
+    .form-container,
+    .form-container * {
+        transform: none !important;
+        transition: none !important;
+        will-change: auto !important;
+    }
     
     /* Slow down animations for better mobile experience */
     * {
@@ -2253,7 +2261,7 @@ blockquote p {
     .logo-image {
         animation-duration: 4s !important;
     }
-}
+} 
 
 /* ===================================
    RESPONSIVE DESIGN - MOBILE (600px)
@@ -2336,9 +2344,9 @@ blockquote p {
         font-size: 1rem;
     }
 
-    /* Keep Course/Department and Email/Mobile side-by-side on small phones */
+    /* Keep Course/Department and Email/Mobile single-column on small phones (<=600px) */
     .form-row-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
     
@@ -2813,7 +2821,7 @@ blockquote p {
     
     /* Registration Section */
     .registration-section {
-        padding: 40px 10px;
+        padding: 40px 0;
     }
     
     .form-container {
@@ -3087,7 +3095,7 @@ blockquote p {
     
     /* Registration Section */
     .registration-section {
-        padding: 30px 8px;
+        padding: 30px 0;
     }
     
     .form-container {
