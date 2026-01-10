@@ -320,7 +320,7 @@ body {
     font-size: 4rem;
     font-weight: 700;
     color: var(--ivory);
-    margin-bottom: 30px;
+    margin-bottom: 0px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     line-height: 1.2;
 }
@@ -355,12 +355,14 @@ body {
 }
 
 .season-badge {
-    display: inline-block;
-    padding: 15px 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 30px;
     background: var(--tribal-gradient);
-    border: 3px solid var(--golden-amber);
-    border-radius: 50px;
-    margin: 10px 0;
+    border: 2px solid var(--golden-amber);
+    border-radius: 40px;
+    margin: 8px 0;
     box-shadow: var(--shadow-medium);
     position: relative;
     overflow: hidden;
@@ -383,9 +385,61 @@ body {
 
 .season-number {
     font-family: var(--font-serif);
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: var(--ivory);
+}
+
+.season-badge i {
+    color: var(--ivory);
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.season-badge:hover i {
+    transform: translateX(4px);
+}
+
+/* Hero CTAs container */
+.hero-ctas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Ensure both CTAs render equal width on the same line */
+.hero-ctas .season-badge,
+.hero-ctas .cta-secondary {
+    flex: 1 1 260px;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Secondary CTA */
+.cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 30px;
+    border: 2px solid var(--sage-green);
+    color: var(--sage-green);
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 8px 0;
+}
+
+.cta-secondary:hover {
+    background: var(--sage-green);
+    color: var(--forest-deep);
+    transform: translateY(-2px);
 }
 
 .hero-subtitle {
@@ -405,6 +459,7 @@ body {
     font-size: 1.3rem;
     color: var(--golden-amber);
     margin-top: 30px;
+    margin-bottom: 30px;
     font-style: italic;
 }
 
@@ -900,7 +955,7 @@ blockquote p {
 
 /* Countdown Timer Styles */
 .countdown-container {
-    margin-top: 3rem;
+    margin-top: 0rem;
     padding: 2rem;
     background: linear-gradient(135deg, rgba(200, 150, 100, 0.15), rgba(122, 179, 66, 0.15));
     border: 2px solid rgba(200, 150, 100, 0.4);
@@ -978,15 +1033,16 @@ blockquote p {
 
     .countdown-timer {
         gap: 0.25rem;
+        flex-wrap: nowrap;
     }
 
     .countdown-unit {
         padding: 0.8rem 0.5rem;
-        min-width: 60px;
+        min-width: 50px;
     }
 
     .countdown-value {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .countdown-separator {
@@ -1700,6 +1756,12 @@ blockquote p {
         padding: 15px 35px;
         margin: 25px 0;
     }
+
+    .cta-secondary {
+        padding: 15px 35px;
+        margin: 25px 0;
+        font-size: 1.2rem;
+    }
     
     .season-number {
         font-size: 1.6rem;
@@ -1886,6 +1948,12 @@ blockquote p {
         padding: 12px 30px;
         margin: 20px 0;
         border: 2px solid var(--golden-amber);
+    }
+
+    .cta-secondary {
+        padding: 12px 30px;
+        margin: 20px 0;
+        font-size: 1.4rem;
     }
     
     .season-number {
@@ -2216,6 +2284,12 @@ blockquote p {
         margin: 12px 0;
         border: 2px solid var(--tribal-gold);
         cursor: pointer;
+    }
+
+    .cta-secondary {
+        padding: 12px 30px;
+        margin: 12px 0;
+        font-size: 1.5rem;
     }
     
     .season-number {
@@ -2553,6 +2627,12 @@ blockquote p {
     .season-badge {
         padding: 10px 25px;
         margin: 18px 0;
+    }
+
+    .cta-secondary {
+        padding: 10px 25px;
+        margin: 18px 0;
+        font-size: 1.5rem;
     }
     
     .season-number {
