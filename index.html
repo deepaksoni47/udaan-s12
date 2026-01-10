@@ -259,14 +259,14 @@
                             <small id="emailHint" class="helper-text">Use a valid email where we can reach you</small>
                         </div>
                         <div class="input-group">
-                                <input type="tel" id="mobileInput" name="mobile" required autocomplete="off" pattern="[0-9]{10}" inputmode="numeric" maxlength="10" placeholder="e.g., 9876543210" aria-describedby="mobileHint">
+                                <input type="tel" id="mobileInput" name="mobile" required autocomplete="off" pattern="[0-9]{10}" inputmode="numeric" maxlength="10" placeholder="e.g., 9876543210" aria-describedby="mobileHint" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)" onpaste="event.preventDefault();this.value=((event.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'')).slice(0,10)">
                                 <label for="mobileInput">Mobile Number <span style="color:#ff6b6b">*</span></label>
                                 <small id="mobileHint" class="helper-text">10-digit mobile number (no country code)</small>
                             </div>
                         </div>
 
                         <div class="input-group">
-                            <input type="tel" id="whatsappInput" name="whatsapp" required autocomplete="off" pattern="[0-9]{10}" inputmode="numeric" maxlength="10" placeholder="e.g., 9876543210" aria-describedby="whatsappHint">
+                            <input type="tel" id="whatsappInput" name="whatsapp" required autocomplete="off" pattern="[0-9]{10}" inputmode="numeric" maxlength="10" placeholder="e.g., 9876543210" aria-describedby="whatsappHint" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)" onpaste="event.preventDefault();this.value=((event.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'')).slice(0,10)">
                             <label for="whatsappInput">WhatsApp Number <span style="color:#ff6b6b">*</span></label>
                             <small id="whatsappHint" class="helper-text">WhatsApp number we can use to send updates</small>
                         </div> 
@@ -415,6 +415,35 @@
                     "We do not inherit the earth from our ancestors; we borrow it from our children."
                     <i class="fas fa-leaf"></i>
                 </p>
+
+                <!-- Social Links -->
+                <div class="social-links" aria-label="Udaan social links">
+                    <a href="https://www.instagram.com/udaan.ggv" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://x.com/udaan_ggv" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X">
+                        <i class="fa-brands fa-x" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.facebook.com/udaan.ggv/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+                        <i class="fa-brands fa-facebook" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://pin.it/1d01RxEo8" target="_blank" rel="noopener" aria-label="Pinterest" title="Pinterest">
+                        <i class="fa-brands fa-pinterest" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/udaanggv" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+                        <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a href="mailto:udaantheculture@gmail.com" aria-label="Email Udaan" title="Email">
+                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+                <!-- Contact / Address -->
+                <div class="contact-info">
+                    <div class="contact-line"><i class="fa-solid fa-location-dot"></i>&nbsp;Guru Ghasidas Vishwavidyalaya, Bilaspur, Chhattisgarh 495009</div>
+                    <div class="contact-line"><i class="fa-solid fa-envelope"></i>&nbsp;<a href="mailto:udaantheculture@gmail.com">udaantheculture@gmail.com</a></div>
+                </div>
+
                 <p class="footer-copy">&copy; 2026 Udaan - Season 12 | University Magazine</p>
             </div>
         </footer>

@@ -1880,17 +1880,42 @@ blockquote p {
    FOOTER
    =================================== */
 .footer {
-    padding: 60px 20px;
+    padding: 30px 20px; /* reduced vertical padding */
     text-align: center;
     background: rgba(232, 245, 233, 0.3);
     backdrop-filter: blur(10px);
-    margin-top: 80px;
+    margin-top: 40px; /* reduced top margin */
     border-top: 2px solid rgba(124, 179, 66, 0.2);
 }
 
 .footer-content {
-    max-width: 800px;
+    /* Increased to allow footer quote to fit on a single line on desktop */
+    max-width: 1100px;
     margin: 0 auto;
+}
+
+/* Footer contact link styles */
+.contact-info a {
+    color: var(--sage-green);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(85,139,47,0.18);
+    padding-bottom: 2px;
+    transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.contact-info a:hover,
+.contact-info a:focus {
+    color: var(--tribal-gold); /* orange on hover for visibility */
+    border-color: var(--tribal-gold);
+    transform: translateY(-2px);
+    outline: none;
+    font-weight: 600;
+}
+
+/* Ensure focus-visible for keyboard users */
+.contact-info a:focus-visible {
+    box-shadow: 0 0 0 6px rgba(255,160,0,0.12); /* subtle tribal-gold focus ring */
+    border-radius: 4px;
 }
 
 .footer-quote {
@@ -1898,17 +1923,86 @@ blockquote p {
     font-size: 1.3rem;
     color: var(--golden-amber);
     font-style: italic;
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
+    margin: 12px auto;
+    display: block; /* make block so it can span full width */
+    text-align: center;
+    white-space: nowrap; /* keep quote on a single line on larger screens */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Allow wrapping on smaller screens */
+@media (max-width: 768px) {
+    .footer-quote {
+        white-space: normal;
+        font-size: 1.15rem;
+        padding: 0 12px;
+    }
 }
 
 .footer-copy {
     font-size: 0.95rem;
     color: var(--sage-green);
     margin-top: 20px;
+}
+
+/* Footer social icons */
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.social-links a {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(124,179,66,0.08);
+    color: var(--sage-green);
+    border: 1px solid rgba(124,179,66,0.12);
+    transition: all 220ms var(--transition-smooth);
+    text-decoration: none;
+}
+
+.social-links a i {
+    font-size: 1.05rem;
+}
+
+.social-links a:hover,
+.social-links a:focus {
+    background: var(--tribal-gold);
+    color: var(--forest-deep);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+}
+
+.contact-info {
+    margin-top: 12px;
+    color: var(--sage-green);
+    font-size: 0.95rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+.contact-info .contact-line i {
+    color: var(--golden-amber);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .social-links a {
+        width: 38px;
+        height: 38px;
+    }
+    .social-links a i { font-size: 0.95rem; }
+    .contact-info { font-size: 0.9rem; }
 }
 
 /* ===================================
