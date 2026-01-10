@@ -1996,6 +1996,47 @@ blockquote p {
         font-size: 3.5rem;
         margin-bottom: 20px;
     }
+
+    /* Shrink and reposition tribal overlay patterns on tablet and smaller */
+    .tribal-pattern {
+        width: 200px;
+        height: 200px;
+        opacity: 0.6;
+        animation-duration: 30s; /* slightly slower on smaller screens */
+    }
+
+    .tribal-pattern-1 {
+        top: 6%;
+        left: 4%;
+    }
+
+    .tribal-pattern-2 {
+        top: 64%;
+        right: 6%;
+    }
+
+    .tribal-pattern-3 {
+        bottom: 10%;
+        left: 8%;
+    }
+
+    .tribal-pattern-4 {
+        top: 8%;
+        right: 8%;
+    }
+
+    /* Further reduce size on small phones */
+    @media (max-width: 480px) {
+        .tribal-pattern {
+            width: 120px;
+            height: 120px;
+            opacity: 0.6;
+        }
+        .tribal-pattern-1 { left: 3%; top: 6%; }
+        .tribal-pattern-2 { right: 4%; top: 68%; }
+        .tribal-pattern-3 { left: 6%; bottom: 8%; }
+        .tribal-pattern-4 { right: 6%; top: 6%; }
+    }
     
     /* Tagline */
     .theme-tagline {
@@ -2477,6 +2518,26 @@ blockquote p {
 /* ===================================
    RESPONSIVE DESIGN - MOBILE (600px)
    =================================== */
+/* Slow animations on mid-width devices (tablet / narrow desktop) to match desktop & mobile pacing */
+@media (min-width: 601px) {
+    /* Slow key animations for smoother motion on tablets */
+    .tribal-pattern {
+        animation-duration: 30s !important;
+    }
+    .leaf {
+        animation-duration: 25s !important;
+    }
+    .logo-image {
+        animation-duration: 4s !important;
+    }
+    .tribal-icon {
+        animation-duration: 4s !important;
+    }
+    [data-aos] {
+        transition-duration: 1s !important;
+    }
+}
+
 @media (max-width: 600px) {
     html {
         font-size: 18px;
