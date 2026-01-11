@@ -1,14 +1,11 @@
-﻿
-
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
   initParticles();
   initTribalLoader();
   initAOS();
-  initTyped();
   initTilt();
   initCountdownTimer();
   initHeroTyping();
-  
+
   if (document.getElementById("registrationForm")) {
     initFormLogic();
     initProgressTracking();
@@ -122,23 +119,7 @@ function initAOS() {
   }
 }
 
-function initTyped() {
-  if (typeof Typed !== "undefined") {
-    new Typed(".typed-text", {
-      strings: ["UDAAN", "à¤‰à¤¡à¤¼à¤¾à¤¨", "UDAAN"],
-      typeSpeed: 100,
-      backSpeed: 80,
-      backDelay: 2000,
-      loop: true,
-      showCursor: true,
-      cursorChar: "|",
-      autoInsertCss: true,
-    });
-  }
-}
-
 function initTilt() {
-  
   const isMobileDevice = () => {
     return (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -147,15 +128,12 @@ function initTilt() {
     );
   };
 
-  
   const supportsHover = () =>
     window.matchMedia &&
     window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   if (typeof VanillaTilt !== "undefined") {
-    
     if (supportsHover()) {
-      
       VanillaTilt.init(document.querySelectorAll(".theme-card"), {
         max: 10,
         speed: 400,
@@ -164,7 +142,6 @@ function initTilt() {
         perspective: 1000,
       });
 
-      
       VanillaTilt.init(document.querySelectorAll(".board-card"), {
         max: 8,
         speed: 300,
@@ -173,7 +150,6 @@ function initTilt() {
         perspective: 800,
       });
 
-      
       VanillaTilt.init(document.querySelectorAll(".form-container"), {
         max: 2,
         speed: 400,
@@ -182,14 +158,12 @@ function initTilt() {
         perspective: 1000,
       });
     } else {
-      
       document.querySelectorAll("[data-tilt]").forEach((el) => {
         el.removeAttribute("data-tilt");
         el.removeAttribute("data-tilt-glare");
         el.removeAttribute("data-tilt-max");
         el.removeAttribute("data-tilt-speed");
       });
-      
     }
   }
 }
@@ -198,7 +172,6 @@ function initSoundToggle() {
   const soundToggle = document.getElementById("soundToggle");
   let isMuted = true;
 
-  
   let audioContext;
   let oscillator;
   let gainNode;
@@ -216,35 +189,29 @@ function initSoundToggle() {
       playAmbientSound();
     }
 
-    
     soundToggle.style.animation = "none";
     setTimeout(() => {
       soundToggle.style.animation = "";
     }, 10);
   });
 
-  
   soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
   soundToggle.classList.add("muted");
 
   function playAmbientSound() {
-    
     try {
       if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
       }
 
-      
       if (audioContext.state === "suspended") {
         audioContext.resume();
       }
 
-      
       const masterGain = audioContext.createGain();
       masterGain.gain.setValueAtTime(0.2, audioContext.currentTime);
       masterGain.connect(audioContext.destination);
 
-      
       const bufferSize = audioContext.sampleRate * 2;
       const noiseBuffer = audioContext.createBuffer(
         1,
@@ -259,7 +226,6 @@ function initSoundToggle() {
       noiseSource.buffer = noiseBuffer;
       noiseSource.loop = true;
 
-      
       const noiseFilter = audioContext.createBiquadFilter();
       noiseFilter.type = "lowpass";
       noiseFilter.frequency.setValueAtTime(2000, audioContext.currentTime);
@@ -272,7 +238,6 @@ function initSoundToggle() {
       noiseGain.connect(masterGain);
       noiseSource.start();
 
-      
       const deepOsc = audioContext.createOscillator();
       deepOsc.type = "sine";
       deepOsc.frequency.setValueAtTime(50, audioContext.currentTime);
@@ -284,7 +249,6 @@ function initSoundToggle() {
       deepGain.connect(masterGain);
       deepOsc.start();
 
-      
       const createBirdChirp = (startFreq, duration, delay) => {
         setTimeout(() => {
           if (!isMuted) {
@@ -300,7 +264,6 @@ function initSoundToggle() {
               audioContext.currentTime + duration
             );
 
-            
             bird.frequency.exponentialRampToValueAtTime(
               startFreq * 1.5,
               audioContext.currentTime + duration * 0.3
@@ -319,7 +282,6 @@ function initSoundToggle() {
         }, delay);
       };
 
-      
       const birdPatterns = [
         { freq: 2000, duration: 0.15, interval: 4000 },
         { freq: 2500, duration: 0.12, interval: 5500 },
@@ -340,18 +302,16 @@ function initSoundToggle() {
         }, pattern.interval);
       });
 
-      
       const swell = audioContext.createOscillator();
       const swellGain = audioContext.createGain();
 
-      swell.frequency.setValueAtTime(0.3, audioContext.currentTime); 
+      swell.frequency.setValueAtTime(0.3, audioContext.currentTime);
       swellGain.gain.setValueAtTime(0.02, audioContext.currentTime);
 
       swell.connect(swellGain);
       swellGain.connect(masterGain.gain);
       swell.start();
 
-      
       window.audioOscillators = [noiseSource, deepOsc, swell];
     } catch (e) {
       console.log("Web Audio API not supported", e);
@@ -359,14 +319,11 @@ function initSoundToggle() {
   }
 
   function stopAmbientSound() {
-    
     if (window.audioOscillators) {
       window.audioOscillators.forEach((osc) => {
         try {
           osc.stop();
-        } catch (e) {
-          
-        }
+        } catch (e) {}
       });
       window.audioOscillators = null;
     }
@@ -374,9 +331,7 @@ function initSoundToggle() {
     if (oscillator) {
       try {
         oscillator.stop();
-      } catch (e) {
-        
-      }
+      } catch (e) {}
       oscillator = null;
     }
   }
@@ -387,26 +342,23 @@ function initFormLogic() {
   const errorBox = document.getElementById("formError");
   if (!form) return;
 
-  
   form.setAttribute("novalidate", "true");
 
-  
   const phoneFields = [
     document.getElementById("mobileInput"),
     document.getElementById("whatsappInput"),
   ];
   phoneFields.forEach((f) => {
     if (!f) return;
-    
+
     f.setAttribute("inputmode", "numeric");
     f.setAttribute("maxlength", "10");
-    
+
     f.addEventListener("input", () => {
       const cleaned = f.value.replace(/\D/g, "").slice(0, 10);
       if (f.value !== cleaned) f.value = cleaned;
     });
 
-    
     f.addEventListener("keypress", (e) => {
       if (!/[0-9]/.test(e.key)) {
         e.preventDefault();
@@ -418,9 +370,7 @@ function initFormLogic() {
       if (f.value !== cleaned) f.value = cleaned;
     });
 
-    
     f.addEventListener("keydown", (e) => {
-      
       const ctrlKeys = [
         "Backspace",
         "Delete",
@@ -431,44 +381,39 @@ function initFormLogic() {
         "End",
       ];
       if (ctrlKeys.includes(e.key)) return;
-      
+
       if (!/^[0-9]$/.test(e.key)) {
         e.preventDefault();
       }
     });
 
-    
     f.addEventListener("beforeinput", (e) => {
-      
       const data = e.data;
       if (data && /\D/.test(data)) {
         e.preventDefault();
       }
-      
     });
 
-    
     f.addEventListener("paste", (e) => {
       e.preventDefault();
       const text = (e.clipboardData || window.clipboardData).getData("text");
       const cleaned = (text || "").replace(/\D/g, "").slice(0, 10);
-      
+
       const start = f.selectionStart || 0;
       const end = f.selectionEnd || 0;
       const newVal = (f.value.slice(0, start) + cleaned + f.value.slice(end))
         .replace(/\D/g, "")
         .slice(0, 10);
       f.value = newVal;
-      
+
       const pos = Math.min(start + cleaned.length, 10);
       f.setSelectionRange(pos, pos);
-      
+
       const ev = new Event("input", { bubbles: true });
       f.dispatchEvent(ev);
     });
   });
 
-  
   function markInvalid(el) {
     if (!el) return;
     el.classList.add("invalid");
@@ -500,7 +445,6 @@ function initFormLogic() {
   const deptField = document.getElementById("departmentInput");
   const semesterField = document.getElementById("semesterSelect");
 
-  
   const fieldConstraints = [
     { el: fullnameField, allowed: /[A-Za-z .'-]/, max: 60 },
     { el: courseField, allowed: /[A-Za-z0-9 &().,'-]/, max: 50 },
@@ -528,7 +472,6 @@ function initFormLogic() {
     });
   });
 
-  
   if (fullnameField)
     fullnameField.addEventListener("input", () => {
       if (fullnameField.value.trim()) clearInvalid(fullnameField);
@@ -575,7 +518,6 @@ function initFormLogic() {
       clearError();
     });
 
-  
   document.querySelectorAll('input[name="boards[]"]').forEach((cb) => {
     cb.addEventListener("change", () => {
       if (
@@ -593,11 +535,10 @@ function initFormLogic() {
       errorBox.textContent = message;
     }
     if (el) {
-      
       if (el.classList) el.classList.add("invalid");
       if (el.focus && typeof el.focus === "function") el.focus();
     }
-    
+
     if (message && message.toLowerCase().includes("board")) {
       if (boardGrid) boardGrid.classList.add("invalid");
     }
@@ -608,7 +549,7 @@ function initFormLogic() {
       errorBox.style.display = "none";
       errorBox.textContent = "";
     }
-    
+
     form
       .querySelectorAll(".invalid")
       .forEach((el) => el.classList.remove("invalid"));
@@ -627,7 +568,6 @@ function initFormLogic() {
     const semester = document.getElementById("semesterSelect");
     const boards = document.querySelectorAll('input[name="boards[]"]:checked');
 
-    
     if (!fullname || !fullname.value.trim()) {
       e.preventDefault();
       showError("Please enter your full name.", fullname);
@@ -676,8 +616,6 @@ function initFormLogic() {
       showError("Please select at least one board to audition for.");
       return;
     }
-
-    
   });
 }
 
@@ -688,7 +626,6 @@ function initFormLogic() {
   const whatsappInput = document.getElementById("whatsappInput");
   const sameAsPhoneCheckbox = document.getElementById("sameAsPhone");
 
-  
   function updateFilledState(el) {
     if (!el) return;
     const hasValue = (el.value || "").toString().trim().length > 0;
@@ -703,15 +640,13 @@ function initFormLogic() {
     }
   }
 
-  
   Array.from(
     form.querySelectorAll(
       ".input-group input, .input-group textarea, .input-group select"
     )
   ).forEach((el) => {
-    
     updateFilledState(el);
-    
+
     el.addEventListener("input", () => updateFilledState(el));
     el.addEventListener("change", () => updateFilledState(el));
     el.addEventListener("blur", () => updateFilledState(el));
@@ -719,7 +654,6 @@ function initFormLogic() {
 
   const boardGrid = document.getElementById("boardGrid");
 
-  
   function ensureErrorElement(input) {
     if (!input) return null;
     const parent = input.closest(".input-group") || input.parentElement;
@@ -753,7 +687,6 @@ function initFormLogic() {
     input.classList.remove("invalid");
   }
 
-  
   const boardErrorEl = (() => {
     if (!boardGrid) return null;
     let el = boardGrid.parentElement.querySelector(".field-error");
@@ -781,7 +714,6 @@ function initFormLogic() {
     if (boardGrid) boardGrid.classList.remove("invalid");
   }
 
-  
   const boardCheckboxes = form.querySelectorAll(
     'input[type="checkbox"].board-checkbox'
   );
@@ -792,7 +724,6 @@ function initFormLogic() {
     });
   });
 
-  
   (function setupLiveValidation() {
     const fullnameInput = document.getElementById("fullnameInput");
     const emailInput = document.getElementById("emailInput");
@@ -884,7 +815,6 @@ function initFormLogic() {
     }
   })();
 
-  
   if (sameAsPhoneCheckbox && mobileInput && whatsappInput) {
     sameAsPhoneCheckbox.addEventListener("change", function () {
       if (this.checked) {
@@ -893,11 +823,10 @@ function initFormLogic() {
       } else {
         whatsappInput.disabled = false;
       }
-      
+
       updateFilledState(whatsappInput);
     });
 
-    
     mobileInput.addEventListener("input", function () {
       if (sameAsPhoneCheckbox.checked) {
         whatsappInput.value = this.value;
@@ -907,7 +836,6 @@ function initFormLogic() {
     });
   }
 
-  
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -938,7 +866,6 @@ function initFormLogic() {
         return;
       }
 
-      
       if (input.type === "email" && input.value) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(input.value)) {
@@ -948,7 +875,6 @@ function initFormLogic() {
         }
       }
 
-      
       if (input.type === "tel" && input.value) {
         const phoneRegex = /^[0-9]{10}$/;
         if (!phoneRegex.test(input.value)) {
@@ -959,7 +885,6 @@ function initFormLogic() {
       }
     });
 
-    
     const checkboxes = form.querySelectorAll(
       'input[type="checkbox"].board-checkbox'
     );
@@ -972,7 +897,6 @@ function initFormLogic() {
       errorMessages.push("Please select at least one board.");
     }
 
-    
     const errorDiv = document.getElementById("formError");
     if (!isValid && errorDiv) {
       errorDiv.innerHTML = errorMessages
@@ -1005,7 +929,6 @@ function initFormLogic() {
     clearFieldError(input);
   }
 
-  
   function showError(message) {
     const errorDiv = document.getElementById("formError");
     if (errorDiv) {
@@ -1015,17 +938,14 @@ function initFormLogic() {
   }
 
   function submitForm() {
-    
     const errorDiv = document.getElementById("formError");
     if (errorDiv) {
       errorDiv.innerHTML = "";
       errorDiv.style.display = "none";
     }
 
-    
     const modal = document.getElementById("previewModal");
     if (!modal) {
-      
       window.location.href = "confirmation.html";
       return;
     }
@@ -1092,26 +1012,21 @@ function initFormLogic() {
       )}</span></div>
     `;
 
-    
-    
     let _previousFocus = null;
     openPreviewModal(modal);
 
-    
     const editBtn = document.getElementById("previewEdit");
     const confirmBtn = document.getElementById("previewConfirm");
     const closeBtn = document.getElementById("previewClose");
 
-    
     if (!confirmBtn.dataset.bound) {
       confirmBtn.dataset.bound = "1";
       confirmBtn.addEventListener("click", function () {
         confirmBtn.disabled = true;
         confirmBtn.textContent = "Submitting...";
-        
+
         createConfetti();
         setTimeout(() => {
-          
           window.location.href = "confirmation.html";
         }, 900);
       });
@@ -1121,7 +1036,7 @@ function initFormLogic() {
       editBtn.dataset.bound = "1";
       editBtn.addEventListener("click", function () {
         closePreviewModal(modal);
-        
+
         const firstField = document.getElementById("fullnameInput");
         if (firstField) firstField.focus();
       });
@@ -1134,7 +1049,6 @@ function initFormLogic() {
       });
     }
 
-    
     if (!modal.dataset.overlayBound) {
       modal.dataset.overlayBound = "1";
       modal.addEventListener("click", function (e) {
@@ -1143,7 +1057,6 @@ function initFormLogic() {
         }
       });
 
-      
       document.addEventListener("keydown", function onEsc(e) {
         if (e.key === "Escape" && modal.classList.contains("open")) {
           closePreviewModal(modal);
@@ -1151,16 +1064,15 @@ function initFormLogic() {
       });
     }
 
-    
     function openPreviewModal(m) {
       _previousFocus = document.activeElement;
       m.classList.add("open");
       m.setAttribute("aria-hidden", "false");
-      
+
       const firstAction =
         m.querySelector("#previewEdit") || m.querySelector("#previewConfirm");
       if (firstAction) firstAction.focus();
-      
+
       document.body.style.overflow = "hidden";
     }
 
@@ -1174,7 +1086,6 @@ function initFormLogic() {
   }
 
   function createConfetti() {
-    
     for (let i = 0; i < 50; i++) {
       const confetti = document.createElement("div");
       confetti.style.cssText = `
@@ -1214,17 +1125,14 @@ function initFormLogic() {
       setTimeout(() => confetti.remove(), 5000);
     }
   }
-
-  
 }
 
 function initProgressTracking() {
   const form = document.getElementById("registrationForm");
   const progressFill = document.getElementById("progressFill");
-  
+
   if (!form || !progressFill) return;
 
-  
   form.addEventListener("input", updateProgress);
 
   function updateProgress() {
@@ -1236,14 +1144,12 @@ function initProgressTracking() {
     let totalFields = inputs.length;
     let filledFields = 0;
 
-    
     inputs.forEach((input) => {
       if (input.value.trim()) {
         filledFields++;
       }
     });
 
-    
     const isAnyChecked = Array.from(checkboxes).some((cb) => cb.checked);
     if (isAnyChecked) {
       filledFields++;
@@ -1258,7 +1164,6 @@ function initProgressTracking() {
 }
 
 if (typeof gsap !== "undefined") {
-  
   gsap.to(".tribal-pattern", {
     rotation: 360,
     duration: 30,
@@ -1266,7 +1171,6 @@ if (typeof gsap !== "undefined") {
     ease: "none",
   });
 
-  
   const sectionIcons = document.querySelectorAll(".section-icon");
   sectionIcons.forEach((icon) => {
     icon.addEventListener("mouseenter", () => {
@@ -1288,7 +1192,6 @@ if (typeof gsap !== "undefined") {
     });
   });
 
-  
   const inputs = document.querySelectorAll("input, select");
   inputs.forEach((input) => {
     input.addEventListener("focus", () => {
@@ -1372,7 +1275,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 console.log(
-  "%cðŸŒ¿ UDAAN Season 12 ðŸŒ¿",
+  "%c🌿 UDAAN Season 12 🌿",
   "font-size: 20px; color: #c68642; font-weight: bold;"
 );
 console.log(
@@ -1380,13 +1283,11 @@ console.log(
   "font-size: 14px; color: #4a7c2c; font-style: italic;"
 );
 console.log(
-  "%cJoin our tribe and make a difference! ðŸƒ",
+  "%cJoin our tribe and make a difference! 🌱",
   "font-size: 12px; color: #8f9779;"
 );
 
 function initCountdownTimer() {
-  
-  
   const registrationDeadline = new Date("2026-01-31 23:59:59").getTime();
 
   function updateCountdown() {
@@ -1394,19 +1295,16 @@ function initCountdownTimer() {
     const distance = registrationDeadline - now;
 
     if (distance < 0) {
-      
       document.getElementById("days").textContent = "00";
       document.getElementById("hours").textContent = "00";
       document.getElementById("minutes").textContent = "00";
       document.getElementById("seconds").textContent = "00";
 
-      
       const label = document.querySelector(".countdown-label");
       if (label) label.textContent = "Registrations Closed";
       return;
     }
 
-    
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -1414,7 +1312,6 @@ function initCountdownTimer() {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    
     document.getElementById("days").textContent = String(days).padStart(2, "0");
     document.getElementById("hours").textContent = String(hours).padStart(
       2,
@@ -1430,10 +1327,8 @@ function initCountdownTimer() {
     );
   }
 
-  
   updateCountdown();
 
-  
   setInterval(updateCountdown, 1000);
 }
 
@@ -1444,9 +1339,7 @@ function initHeroTyping() {
   const text = el.textContent.trim();
   el.textContent = "";
 
-  
   setTimeout(() => {
-    
     if (typeof TypeIt !== "undefined") {
       new TypeIt("#heroSubtitle", {
         strings: text,
@@ -1462,20 +1355,6 @@ function initHeroTyping() {
       return;
     }
 
-    
-    if (typeof Typed !== "undefined") {
-      new Typed("#heroSubtitle", {
-        strings: [text],
-        typeSpeed: 70,
-        showCursor: true,
-        onComplete: function () {
-          
-        },
-      });
-      return;
-    }
-
-    
     let i = 0;
     const speed = 70;
     const interval = setInterval(() => {
@@ -1487,11 +1366,10 @@ function initHeroTyping() {
 }
 
 function initTribalLoader() {
-  
   window.addEventListener("load", () => {
     const loader = document.getElementById("tribal-loader");
     if (!loader) return;
-    
+
     setTimeout(() => {
       loader.classList.add("hidden");
     }, 1400);
@@ -1501,7 +1379,6 @@ function initTribalLoader() {
 function toggleBoard(card) {
   const checkbox = card.querySelector('input[type="checkbox"]');
 
-  
   setTimeout(() => {
     if (checkbox.checked) {
       card.classList.add("selected");
@@ -1510,4 +1387,3 @@ function toggleBoard(card) {
     }
   }, 10);
 }
-
