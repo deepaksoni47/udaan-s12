@@ -216,6 +216,46 @@
       from { transform: translateY(0); }
       to { transform: translateY(-120vh); }
     }
+
+    /* Boards bubbles */
+    .boards-section {
+      margin: 18px 0;
+      text-align: center;
+    }
+    .boards-section strong { display:block; color:#3f5f2f; margin-bottom:8px; }
+    .board-bubbles {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .board-bubble {
+      background: linear-gradient(135deg,#7a9f55,#5c7f3c);
+      color:#fff;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:0.95rem;
+      box-shadow:0 6px 18px rgba(92,127,60,0.2);
+      transform:translateY(0);
+      transition:transform 0.3s ease;
+    }
+    .board-bubble:hover { transform:translateY(-6px); box-shadow:0 10px 24px rgba(92,127,60,0.25); }
+
+    /* Print styles: hide UI elements that shouldn't appear in print/PDF */
+    @media print {
+      .no-print { display: none !important; }
+      /* hide decorative/interactive elements from print */
+      #particles-js, .leaves-container, .tribal-overlay { display: none !important; }
+      /* make the card print-friendly but preserve a clear border */
+      body { background: #fff !important; color: #000 !important; }
+      .ceremonial-card {
+        box-shadow: none !important;
+        border-radius: 16px !important;
+        border: 2px solid #5c7f3c !important;
+        background: #fff !important;
+      }
+      .title { color: #000 !important; }
+    }
   </style>
 </head>
 <body>
@@ -275,6 +315,11 @@
       <div><strong>Course:</strong> <span id="regCourse">Your Course</span></div>
     </div>
 
+    <div class="boards-section" id="boardsSection" style="display:none">
+      <strong>Selected Boards:</strong>
+      <div class="board-bubbles" id="boardBubbles" aria-live="polite"></div>
+    </div>
+
     <div class="meeting-box">
       <strong>Meet the Tribe</strong><br>
       Saturday, XXth January 2026<br>
@@ -282,13 +327,13 @@
     </div>
 
     <div class="actions">
-      <button class="btn btn-primary" onclick="window.print()">
+      <button class="btn btn-primary no-print" onclick="window.print()">
         <i class="ri-printer-line"></i> Print Pass
       </button>
-      <button class="btn btn-outline" onclick="window.location.href='index.html'">
+      <button class="btn btn-outline no-print" onclick="window.location.href='index.html'">
         Return to Forest
       </button>
-    </div>
+    </div>    
 
   </div>
 </div>
@@ -297,6 +342,7 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
 <script>
   AOS.init();
@@ -319,6 +365,42 @@
       opacity: { value: 0.4, random: true },
       move: { speed: 1.6 }
     }
+  });
+
+  // Render selected boards as bubbles
+  function renderBoards() {
+    const boardsParam = getQueryParam('boards');
+    const list = boardsParam ? boardsParam.split(',').map(s => s.trim()).filter(Boolean) : [];
+    if (list.length > 0) {
+      const container = document.getElementById('boardBubbles');
+      container.innerHTML = '';
+      list.forEach((b) => {
+        const el = document.createElement('div');
+        el.className = 'board-bubble';
+        el.textContent = b;
+        container.appendChild(el);
+      });
+      document.getElementById('boardsSection').style.display = 'block';
+    }
+  }
+
+  // Confetti celebration on load
+  function fireConfetti() {
+    if (typeof confetti !== 'function') return;
+    const duration = 2000;
+    const end = Date.now() + duration;
+    (function frame() {
+      confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 } });
+      confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 } });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    }());
+  }
+
+  // Run when DOM is ready
+  document.addEventListener('DOMContentLoaded', function () {
+    renderBoards();
+    // small delay to ensure visuals are ready
+    setTimeout(fireConfetti, 250);
   });
 </script>
 
