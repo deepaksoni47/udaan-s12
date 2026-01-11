@@ -819,6 +819,98 @@ function initFormLogic() {
     });
   });
 
+  // Real-time inline validation while typing
+  (function setupLiveValidation() {
+    const fullnameInput = document.getElementById("fullnameInput");
+    const emailInput = document.getElementById("emailInput");
+    const mobileInputLocal = document.getElementById("mobileInput");
+    const whatsappInputLocal = document.getElementById("whatsappInput");
+    const courseInput = document.getElementById("courseInput");
+    const deptInput = document.getElementById("departmentInput");
+    const semesterSelect = document.getElementById("semesterSelect");
+
+    function validateEmailVal(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+    function validatePhoneVal(v) {
+      return /^\d{10}$/.test(v);
+    }
+
+    if (fullnameInput) {
+      fullnameInput.addEventListener("input", () => {
+        if (fullnameInput.value.trim()) clearFieldError(fullnameInput);
+        else setFieldError(fullnameInput, "Full name is required.");
+      });
+      fullnameInput.addEventListener("blur", () => {
+        if (!fullnameInput.value.trim())
+          setFieldError(fullnameInput, "Full name is required.");
+      });
+    }
+
+    if (emailInput) {
+      emailInput.addEventListener("input", () => {
+        const v = emailInput.value.trim();
+        if (!v) {
+          clearFieldError(emailInput);
+        } else if (!validateEmailVal(v)) {
+          setFieldError(emailInput, "Please enter a valid email address.");
+        } else {
+          clearFieldError(emailInput);
+        }
+      });
+      emailInput.addEventListener("blur", () => {
+        const v = emailInput.value.trim();
+        if (v && !validateEmailVal(v))
+          setFieldError(emailInput, "Please enter a valid email address.");
+      });
+    }
+
+    if (mobileInputLocal) {
+      mobileInputLocal.addEventListener("input", () => {
+        const v = mobileInputLocal.value.replace(/\D/g, "").trim();
+        if (!v) clearFieldError(mobileInputLocal);
+        else if (!/^\d{10}$/.test(v))
+          setFieldError(mobileInputLocal, "Mobile number must be 10 digits.");
+        else clearFieldError(mobileInputLocal);
+      });
+    }
+
+    if (whatsappInputLocal) {
+      whatsappInputLocal.addEventListener("input", () => {
+        const v = whatsappInputLocal.value.replace(/\D/g, "").trim();
+        if (!v) clearFieldError(whatsappInputLocal);
+        else if (!/^\d{10}$/.test(v))
+          setFieldError(
+            whatsappInputLocal,
+            "WhatsApp number must be 10 digits."
+          );
+        else clearFieldError(whatsappInputLocal);
+      });
+    }
+
+    if (courseInput) {
+      courseInput.addEventListener("input", () => {
+        if (courseInput.value.trim()) clearFieldError(courseInput);
+        else setFieldError(courseInput, "Please enter your course.");
+      });
+    }
+
+    if (deptInput) {
+      deptInput.addEventListener("input", () => {
+        if (deptInput.value.trim()) clearFieldError(deptInput);
+        else setFieldError(deptInput, "Please enter your department.");
+      });
+    }
+
+    if (semesterSelect) {
+      semesterSelect.addEventListener("change", () => {
+        if (semesterSelect.value) clearFieldError(semesterSelect);
+        else
+          setFieldError(semesterSelect, "Please select your current semester.");
+      });
+    }
+  })();
+
   // Auto-fill WhatsApp number when checkbox is checked
   if (sameAsPhoneCheckbox && mobileInput && whatsappInput) {
     sameAsPhoneCheckbox.addEventListener("change", function () {
