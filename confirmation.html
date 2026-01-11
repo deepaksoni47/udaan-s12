@@ -1,18 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Registration Successful | Udaan Season 12</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-  <!-- AOS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <style>
@@ -217,7 +214,7 @@
       to { transform: translateY(-120vh); }
     }
 
-    /* Boards bubbles */
+    
     .boards-section {
       margin: 18px 0;
       text-align: center;
@@ -241,12 +238,12 @@
     }
     .board-bubble:hover { transform:translateY(-6px); box-shadow:0 10px 24px rgba(92,127,60,0.25); }
 
-    /* Print styles: hide UI elements that shouldn't appear in print/PDF */
+    
     @media print {
       .no-print { display: none !important; }
-      /* hide decorative/interactive elements from print */
+      
       #particles-js, .leaves-container, .tribal-overlay { display: none !important; }
-      /* make the card print-friendly but preserve a clear border */
+      
       body { background: #fff !important; color: #000 !important; }
       .ceremonial-card {
         box-shadow: none !important;
@@ -260,11 +257,9 @@
 </head>
 <body>
 
-
 <div id="particles-js"></div>
 
-<!-- Tribal Pattern Overlay -->
-<div class="tribal-overlay">
+div class="tribal-overlay">
   <svg class="tribal-pattern tribal-pattern-1" viewBox="0 0 200 200">
     <path d="M100,20 Q120,40 100,60 Q80,40 100,20 M100,60 L100,100 M80,80 L100,100 L120,80 M100,100 Q120,120 100,140 Q80,120 100,100 M70,140 Q100,150 130,140" stroke="currentColor" fill="none" stroke-width="2"/>
   </svg>
@@ -279,7 +274,6 @@
   </svg>
 </div>
 
-<!-- Floating Leaves Animation -->
 <div class="leaves-container">
   <div class="leaf leaf-1"><i class="fas fa-leaf"></i></div>
   <div class="leaf leaf-2"><i class="fas fa-leaf"></i></div>
@@ -299,9 +293,9 @@
     </div>
 
     <div class="tribal-divider">
-      <span>◆</span>
+      <span>â—†</span>
       <div class="line"></div>
-      <span>◆</span>
+      <span>â—†</span>
     </div>
 
     <div class="welcome-text">
@@ -338,7 +332,6 @@
   </div>
 </div>
 
-<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -367,7 +360,7 @@
     }
   });
 
-  // Render selected boards as bubbles
+  
   function renderBoards() {
     const boardsParam = getQueryParam('boards');
     const list = boardsParam ? boardsParam.split(',').map(s => s.trim()).filter(Boolean) : [];
@@ -384,7 +377,7 @@
     }
   }
 
-  // Confetti celebration on load
+  
   function fireConfetti() {
     if (typeof confetti !== 'function') return;
     const duration = 2000;
@@ -396,13 +389,14 @@
     }());
   }
 
-  // Run when DOM is ready
+  
   document.addEventListener('DOMContentLoaded', function () {
     renderBoards();
-    // small delay to ensure visuals are ready
+    
     setTimeout(fireConfetti, 250);
   });
 </script>
 
 </body>
 </html>
+

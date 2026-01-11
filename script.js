@@ -1,11 +1,5 @@
-/* ===================================
-   UDAAN SEASON 12 - JAVASCRIPT
-   Interactive Features & Animations
-   =================================== */
+﻿
 
-// ===================================
-// INITIALIZATION
-// ===================================
 document.addEventListener("DOMContentLoaded", function () {
   initParticles();
   initTribalLoader();
@@ -14,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initTilt();
   initCountdownTimer();
   initHeroTyping();
-  // Only initialize form-related logic when the registration form exists on the page
+  
   if (document.getElementById("registrationForm")) {
     initFormLogic();
     initProgressTracking();
@@ -22,9 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
   initSoundToggle();
 });
 
-// ===================================
-// PARTICLES.JS CONFIGURATION
-// ===================================
 function initParticles() {
   if (typeof particlesJS !== "undefined") {
     particlesJS("particles-js", {
@@ -118,9 +109,6 @@ function initParticles() {
   }
 }
 
-// ===================================
-// AOS (ANIMATE ON SCROLL) INITIALIZATION
-// ===================================
 function initAOS() {
   if (typeof AOS !== "undefined") {
     AOS.init({
@@ -134,13 +122,10 @@ function initAOS() {
   }
 }
 
-// ===================================
-// TYPED.JS - ANIMATED TITLE
-// ===================================
 function initTyped() {
   if (typeof Typed !== "undefined") {
     new Typed(".typed-text", {
-      strings: ["UDAAN", "उड़ान", "UDAAN"],
+      strings: ["UDAAN", "à¤‰à¤¡à¤¼à¤¾à¤¨", "UDAAN"],
       typeSpeed: 100,
       backSpeed: 80,
       backDelay: 2000,
@@ -152,11 +137,8 @@ function initTyped() {
   }
 }
 
-// ===================================
-// VANILLA TILT - CARD EFFECTS
-// ===================================
 function initTilt() {
-  // Disable Tilt on mobile devices
+  
   const isMobileDevice = () => {
     return (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -165,15 +147,15 @@ function initTilt() {
     );
   };
 
-  // Prefer feature-detection for hover support: only initialize tilt where hover is available
+  
   const supportsHover = () =>
     window.matchMedia &&
     window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   if (typeof VanillaTilt !== "undefined") {
-    // Only apply tilt and glare on devices that actually support hover (desktop / pointer: fine)
+    
     if (supportsHover()) {
-      // Tilt effect on theme cards (desktop only)
+      
       VanillaTilt.init(document.querySelectorAll(".theme-card"), {
         max: 10,
         speed: 400,
@@ -182,7 +164,7 @@ function initTilt() {
         perspective: 1000,
       });
 
-      // Tilt effect on board cards
+      
       VanillaTilt.init(document.querySelectorAll(".board-card"), {
         max: 8,
         speed: 300,
@@ -191,7 +173,7 @@ function initTilt() {
         perspective: 800,
       });
 
-      // Tilt effect on form container
+      
       VanillaTilt.init(document.querySelectorAll(".form-container"), {
         max: 2,
         speed: 400,
@@ -200,26 +182,23 @@ function initTilt() {
         perspective: 1000,
       });
     } else {
-      // On touch or non-hover devices, disable tilt/glare by removing the data attributes
+      
       document.querySelectorAll("[data-tilt]").forEach((el) => {
         el.removeAttribute("data-tilt");
         el.removeAttribute("data-tilt-glare");
         el.removeAttribute("data-tilt-max");
         el.removeAttribute("data-tilt-speed");
       });
-      // Any inline transforms applied earlier will be neutralized by CSS rule for (hover: none)
+      
     }
   }
 }
 
-// ===================================
-// SOUND TOGGLE FUNCTIONALITY
-// ===================================
 function initSoundToggle() {
   const soundToggle = document.getElementById("soundToggle");
   let isMuted = true;
 
-  // Create ambient forest sound (optional - using Web Audio API)
+  
   let audioContext;
   let oscillator;
   let gainNode;
@@ -237,35 +216,35 @@ function initSoundToggle() {
       playAmbientSound();
     }
 
-    // Add pulse animation
+    
     soundToggle.style.animation = "none";
     setTimeout(() => {
       soundToggle.style.animation = "";
     }, 10);
   });
 
-  // Set icon to muted by default on load
+  
   soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
   soundToggle.classList.add("muted");
 
   function playAmbientSound() {
-    // Create forest ambient sound using Web Audio API
+    
     try {
       if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
       }
 
-      // Resume audio context if suspended (required by browsers)
+      
       if (audioContext.state === "suspended") {
         audioContext.resume();
       }
 
-      // Create master gain for volume control
+      
       const masterGain = audioContext.createGain();
       masterGain.gain.setValueAtTime(0.2, audioContext.currentTime);
       masterGain.connect(audioContext.destination);
 
-      // ===== WIND/RUSTLING (White Noise) =====
+      
       const bufferSize = audioContext.sampleRate * 2;
       const noiseBuffer = audioContext.createBuffer(
         1,
@@ -280,7 +259,7 @@ function initSoundToggle() {
       noiseSource.buffer = noiseBuffer;
       noiseSource.loop = true;
 
-      // Filter noise for wind effect
+      
       const noiseFilter = audioContext.createBiquadFilter();
       noiseFilter.type = "lowpass";
       noiseFilter.frequency.setValueAtTime(2000, audioContext.currentTime);
@@ -293,7 +272,7 @@ function initSoundToggle() {
       noiseGain.connect(masterGain);
       noiseSource.start();
 
-      // ===== DEEP FOREST AMBIENCE (Low Frequency) =====
+      
       const deepOsc = audioContext.createOscillator();
       deepOsc.type = "sine";
       deepOsc.frequency.setValueAtTime(50, audioContext.currentTime);
@@ -305,7 +284,7 @@ function initSoundToggle() {
       deepGain.connect(masterGain);
       deepOsc.start();
 
-      // ===== BIRD CHIRPS (High Frequency Oscillators) =====
+      
       const createBirdChirp = (startFreq, duration, delay) => {
         setTimeout(() => {
           if (!isMuted) {
@@ -321,7 +300,7 @@ function initSoundToggle() {
               audioContext.currentTime + duration
             );
 
-            // Frequency sweep for chirp effect
+            
             bird.frequency.exponentialRampToValueAtTime(
               startFreq * 1.5,
               audioContext.currentTime + duration * 0.3
@@ -340,7 +319,7 @@ function initSoundToggle() {
         }, delay);
       };
 
-      // Create repeating bird patterns
+      
       const birdPatterns = [
         { freq: 2000, duration: 0.15, interval: 4000 },
         { freq: 2500, duration: 0.12, interval: 5500 },
@@ -361,18 +340,18 @@ function initSoundToggle() {
         }, pattern.interval);
       });
 
-      // ===== GENTLE SWELLING (Amplitude Modulation) =====
+      
       const swell = audioContext.createOscillator();
       const swellGain = audioContext.createGain();
 
-      swell.frequency.setValueAtTime(0.3, audioContext.currentTime); // Very slow 0.3 Hz
+      swell.frequency.setValueAtTime(0.3, audioContext.currentTime); 
       swellGain.gain.setValueAtTime(0.02, audioContext.currentTime);
 
       swell.connect(swellGain);
       swellGain.connect(masterGain.gain);
       swell.start();
 
-      // Store for cleanup
+      
       window.audioOscillators = [noiseSource, deepOsc, swell];
     } catch (e) {
       console.log("Web Audio API not supported", e);
@@ -380,13 +359,13 @@ function initSoundToggle() {
   }
 
   function stopAmbientSound() {
-    // Stop all oscillators
+    
     if (window.audioOscillators) {
       window.audioOscillators.forEach((osc) => {
         try {
           osc.stop();
         } catch (e) {
-          // Oscillator already stopped
+          
         }
       });
       window.audioOscillators = null;
@@ -396,41 +375,38 @@ function initSoundToggle() {
       try {
         oscillator.stop();
       } catch (e) {
-        // Oscillator already stopped
+        
       }
       oscillator = null;
     }
   }
 }
 
-// ===================================
-// FORM VALIDATION & LOGIC
-// ===================================
 function initFormLogic() {
   const form = document.getElementById("registrationForm");
   const errorBox = document.getElementById("formError");
   if (!form) return;
 
-  // disable native validation so we can show custom messages
+  
   form.setAttribute("novalidate", "true");
 
-  // enforce numeric-only input for phone fields on input
+  
   const phoneFields = [
     document.getElementById("mobileInput"),
     document.getElementById("whatsappInput"),
   ];
   phoneFields.forEach((f) => {
     if (!f) return;
-    // ensure mobile keyboard on supporting devices
+    
     f.setAttribute("inputmode", "numeric");
     f.setAttribute("maxlength", "10");
-    // strip any non-digit characters on input (fallback)
+    
     f.addEventListener("input", () => {
       const cleaned = f.value.replace(/\D/g, "").slice(0, 10);
       if (f.value !== cleaned) f.value = cleaned;
     });
 
-    // Extra guards: block non-digits on keypress/keyup
+    
     f.addEventListener("keypress", (e) => {
       if (!/[0-9]/.test(e.key)) {
         e.preventDefault();
@@ -442,9 +418,9 @@ function initFormLogic() {
       if (f.value !== cleaned) f.value = cleaned;
     });
 
-    // Block non-digit keystrokes at keydown level (extra guard)
+    
     f.addEventListener("keydown", (e) => {
-      // Allow control keys
+      
       const ctrlKeys = [
         "Backspace",
         "Delete",
@@ -455,44 +431,44 @@ function initFormLogic() {
         "End",
       ];
       if (ctrlKeys.includes(e.key)) return;
-      // Allow digits only
+      
       if (!/^[0-9]$/.test(e.key)) {
         e.preventDefault();
       }
     });
 
-    // Prevent non-digit characters from being inserted (better UX on mobile)
+    
     f.addEventListener("beforeinput", (e) => {
-      // some browsers provide e.data for the inserted text
+      
       const data = e.data;
       if (data && /\D/.test(data)) {
         e.preventDefault();
       }
-      // if the inputType is insertFromPaste, allow paste handler to clean
+      
     });
 
-    // Clean pasted content
+    
     f.addEventListener("paste", (e) => {
       e.preventDefault();
       const text = (e.clipboardData || window.clipboardData).getData("text");
       const cleaned = (text || "").replace(/\D/g, "").slice(0, 10);
-      // insert cleaned content at cursor position
+      
       const start = f.selectionStart || 0;
       const end = f.selectionEnd || 0;
       const newVal = (f.value.slice(0, start) + cleaned + f.value.slice(end))
         .replace(/\D/g, "")
         .slice(0, 10);
       f.value = newVal;
-      // move caret
+      
       const pos = Math.min(start + cleaned.length, 10);
       f.setSelectionRange(pos, pos);
-      // trigger input event handlers
+      
       const ev = new Event("input", { bubbles: true });
       f.dispatchEvent(ev);
     });
   });
 
-  // Helpers for inline invalid state
+  
   function markInvalid(el) {
     if (!el) return;
     el.classList.add("invalid");
@@ -524,7 +500,7 @@ function initFormLogic() {
   const deptField = document.getElementById("departmentInput");
   const semesterField = document.getElementById("semesterSelect");
 
-  // Allowed character sets and max lengths per field
+  
   const fieldConstraints = [
     { el: fullnameField, allowed: /[A-Za-z .'-]/, max: 60 },
     { el: courseField, allowed: /[A-Za-z0-9 &().,'-]/, max: 50 },
@@ -552,7 +528,7 @@ function initFormLogic() {
     });
   });
 
-  // Real-time validation listeners
+  
   if (fullnameField)
     fullnameField.addEventListener("input", () => {
       if (fullnameField.value.trim()) clearInvalid(fullnameField);
@@ -599,7 +575,7 @@ function initFormLogic() {
       clearError();
     });
 
-  // Board checkbox listener
+  
   document.querySelectorAll('input[name="boards[]"]').forEach((cb) => {
     cb.addEventListener("change", () => {
       if (
@@ -617,11 +593,11 @@ function initFormLogic() {
       errorBox.textContent = message;
     }
     if (el) {
-      // mark invalid on the element and focus if possible
+      
       if (el.classList) el.classList.add("invalid");
       if (el.focus && typeof el.focus === "function") el.focus();
     }
-    // if message relates to boards selection, highlight board grid
+    
     if (message && message.toLowerCase().includes("board")) {
       if (boardGrid) boardGrid.classList.add("invalid");
     }
@@ -632,7 +608,7 @@ function initFormLogic() {
       errorBox.style.display = "none";
       errorBox.textContent = "";
     }
-    // remove invalid classes from inputs and labels
+    
     form
       .querySelectorAll(".invalid")
       .forEach((el) => el.classList.remove("invalid"));
@@ -651,7 +627,7 @@ function initFormLogic() {
     const semester = document.getElementById("semesterSelect");
     const boards = document.querySelectorAll('input[name="boards[]"]:checked');
 
-    // basic checks
+    
     if (!fullname || !fullname.value.trim()) {
       e.preventDefault();
       showError("Please enter your full name.", fullname);
@@ -701,13 +677,10 @@ function initFormLogic() {
       return;
     }
 
-    // If we reach here, allow submission to continue
+    
   });
 }
 
-// ===================================
-// FORM LOGIC - SINGLE PAGE FORM
-// ===================================
 function initFormLogic() {
   const form = document.getElementById("registrationForm");
   const successMessage = document.getElementById("successMessage");
@@ -715,7 +688,7 @@ function initFormLogic() {
   const whatsappInput = document.getElementById("whatsappInput");
   const sameAsPhoneCheckbox = document.getElementById("sameAsPhone");
 
-  // Helper to manage floating labels when field has content
+  
   function updateFilledState(el) {
     if (!el) return;
     const hasValue = (el.value || "").toString().trim().length > 0;
@@ -730,15 +703,15 @@ function initFormLogic() {
     }
   }
 
-  // Attach listeners to inputs, textareas and selects to toggle .filled
+  
   Array.from(
     form.querySelectorAll(
       ".input-group input, .input-group textarea, .input-group select"
     )
   ).forEach((el) => {
-    // initialize state
+    
     updateFilledState(el);
-    // update on input/change/blur
+    
     el.addEventListener("input", () => updateFilledState(el));
     el.addEventListener("change", () => updateFilledState(el));
     el.addEventListener("blur", () => updateFilledState(el));
@@ -746,7 +719,7 @@ function initFormLogic() {
 
   const boardGrid = document.getElementById("boardGrid");
 
-  // Create a small helper to render inline error text like Bootstrap's invalid feedback
+  
   function ensureErrorElement(input) {
     if (!input) return null;
     const parent = input.closest(".input-group") || input.parentElement;
@@ -780,7 +753,7 @@ function initFormLogic() {
     input.classList.remove("invalid");
   }
 
-  // Board specific inline error
+  
   const boardErrorEl = (() => {
     if (!boardGrid) return null;
     let el = boardGrid.parentElement.querySelector(".field-error");
@@ -808,7 +781,7 @@ function initFormLogic() {
     if (boardGrid) boardGrid.classList.remove("invalid");
   }
 
-  // Clear board error inline when a choice is made
+  
   const boardCheckboxes = form.querySelectorAll(
     'input[type="checkbox"].board-checkbox'
   );
@@ -819,7 +792,7 @@ function initFormLogic() {
     });
   });
 
-  // Real-time inline validation while typing
+  
   (function setupLiveValidation() {
     const fullnameInput = document.getElementById("fullnameInput");
     const emailInput = document.getElementById("emailInput");
@@ -911,7 +884,7 @@ function initFormLogic() {
     }
   })();
 
-  // Auto-fill WhatsApp number when checkbox is checked
+  
   if (sameAsPhoneCheckbox && mobileInput && whatsappInput) {
     sameAsPhoneCheckbox.addEventListener("change", function () {
       if (this.checked) {
@@ -920,11 +893,11 @@ function initFormLogic() {
       } else {
         whatsappInput.disabled = false;
       }
-      // Ensure label floats properly even when input is disabled
+      
       updateFilledState(whatsappInput);
     });
 
-    // Also update WhatsApp when mobile number changes (if checkbox is checked)
+    
     mobileInput.addEventListener("input", function () {
       if (sameAsPhoneCheckbox.checked) {
         whatsappInput.value = this.value;
@@ -934,7 +907,7 @@ function initFormLogic() {
     });
   }
 
-  // Form submission
+  
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -965,7 +938,7 @@ function initFormLogic() {
         return;
       }
 
-      // Validate email
+      
       if (input.type === "email" && input.value) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(input.value)) {
@@ -975,7 +948,7 @@ function initFormLogic() {
         }
       }
 
-      // Validate phone numbers
+      
       if (input.type === "tel" && input.value) {
         const phoneRegex = /^[0-9]{10}$/;
         if (!phoneRegex.test(input.value)) {
@@ -986,7 +959,7 @@ function initFormLogic() {
       }
     });
 
-    // Check if at least one board is selected
+    
     const checkboxes = form.querySelectorAll(
       'input[type="checkbox"].board-checkbox'
     );
@@ -999,11 +972,11 @@ function initFormLogic() {
       errorMessages.push("Please select at least one board.");
     }
 
-    // Show error messages if any
+    
     const errorDiv = document.getElementById("formError");
     if (!isValid && errorDiv) {
       errorDiv.innerHTML = errorMessages
-        .map((e) => `<div>• ${e}</div>`)
+        .map((e) => `<div>â€¢ ${e}</div>`)
         .join("");
       errorDiv.style.display = "block";
     } else if (errorDiv) {
@@ -1032,28 +1005,176 @@ function initFormLogic() {
     clearFieldError(input);
   }
 
-  // No longer use alert, errors are shown inline
+  
   function showError(message) {
     const errorDiv = document.getElementById("formError");
     if (errorDiv) {
-      errorDiv.innerHTML = `<div>• ${message}</div>`;
+      errorDiv.innerHTML = `<div>â€¢ ${message}</div>`;
       errorDiv.style.display = "block";
     }
   }
 
   function submitForm() {
-    // Hide error message
+    
     const errorDiv = document.getElementById("formError");
     if (errorDiv) {
       errorDiv.innerHTML = "";
       errorDiv.style.display = "none";
     }
-    // Redirect to confirmation page
-    window.location.href = "confirmation.html";
+
+    
+    const modal = document.getElementById("previewModal");
+    if (!modal) {
+      
+      window.location.href = "confirmation.html";
+      return;
+    }
+
+    const getVal = (id) =>
+      document.getElementById(id)
+        ? document.getElementById(id).value.trim()
+        : "";
+
+    const fullname = getVal("fullnameInput");
+    const email = getVal("emailInput");
+    const mobile = getVal("mobileInput");
+    const whatsapp = getVal("whatsappInput");
+    const course = getVal("courseInput");
+    const department = getVal("departmentInput");
+    const semester = getVal("semesterSelect");
+    const additional = getVal("additionalSkillsInput");
+    const hobbies = getVal("hobbiesInput");
+    const boards = Array.from(
+      document.querySelectorAll('input[name="boards[]"]:checked')
+    ).map((b) => b.value);
+
+    const previewContent = modal.querySelector(".preview-content");
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    previewContent.innerHTML = `
+      <div class="preview-row"><strong>Full Name</strong><span>${escapeHtml(
+        fullname
+      )}</span></div>
+      <div class="preview-row"><strong>Email</strong><span>${escapeHtml(
+        email
+      )}</span></div>
+      <div class="preview-row"><strong>Mobile</strong><span>${escapeHtml(
+        mobile
+      )}</span></div>
+      <div class="preview-row"><strong>WhatsApp</strong><span>${escapeHtml(
+        whatsapp
+      )}</span></div>
+      <div class="preview-row"><strong>Course</strong><span>${escapeHtml(
+        course
+      )}</span></div>
+      <div class="preview-row"><strong>Department</strong><span>${escapeHtml(
+        department
+      )}</span></div>
+      <div class="preview-row"><strong>Semester</strong><span>${escapeHtml(
+        semester
+      )}</span></div>
+      <div class="preview-row"><strong>Boards</strong><span>${escapeHtml(
+        boards.join(", ")
+      )}</span></div>
+      <div class="preview-row"><strong>Additional Skills</strong><span>${escapeHtml(
+        additional
+      )}</span></div>
+      <div class="preview-row"><strong>Hobbies</strong><span>${escapeHtml(
+        hobbies
+      )}</span></div>
+    `;
+
+    
+    
+    let _previousFocus = null;
+    openPreviewModal(modal);
+
+    
+    const editBtn = document.getElementById("previewEdit");
+    const confirmBtn = document.getElementById("previewConfirm");
+    const closeBtn = document.getElementById("previewClose");
+
+    
+    if (!confirmBtn.dataset.bound) {
+      confirmBtn.dataset.bound = "1";
+      confirmBtn.addEventListener("click", function () {
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "Submitting...";
+        
+        createConfetti();
+        setTimeout(() => {
+          
+          window.location.href = "confirmation.html";
+        }, 900);
+      });
+    }
+
+    if (!editBtn.dataset.bound) {
+      editBtn.dataset.bound = "1";
+      editBtn.addEventListener("click", function () {
+        closePreviewModal(modal);
+        
+        const firstField = document.getElementById("fullnameInput");
+        if (firstField) firstField.focus();
+      });
+    }
+
+    if (!closeBtn.dataset.bound) {
+      closeBtn.dataset.bound = "1";
+      closeBtn.addEventListener("click", function () {
+        closePreviewModal(modal);
+      });
+    }
+
+    
+    if (!modal.dataset.overlayBound) {
+      modal.dataset.overlayBound = "1";
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+          closePreviewModal(modal);
+        }
+      });
+
+      
+      document.addEventListener("keydown", function onEsc(e) {
+        if (e.key === "Escape" && modal.classList.contains("open")) {
+          closePreviewModal(modal);
+        }
+      });
+    }
+
+    
+    function openPreviewModal(m) {
+      _previousFocus = document.activeElement;
+      m.classList.add("open");
+      m.setAttribute("aria-hidden", "false");
+      
+      const firstAction =
+        m.querySelector("#previewEdit") || m.querySelector("#previewConfirm");
+      if (firstAction) firstAction.focus();
+      
+      document.body.style.overflow = "hidden";
+    }
+
+    function closePreviewModal(m) {
+      m.classList.remove("open");
+      m.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      if (_previousFocus && typeof _previousFocus.focus === "function")
+        _previousFocus.focus();
+    }
   }
 
   function createConfetti() {
-    // Simple confetti animation
+    
     for (let i = 0; i < 50; i++) {
       const confetti = document.createElement("div");
       confetti.style.cssText = `
@@ -1094,267 +1215,16 @@ function initFormLogic() {
     }
   }
 
-  function showSection(index) {
-    // Hide all sections
-    sections.forEach((section) => {
-      section.classList.remove("active");
-    });
-
-    // Show current section
-    sections[index].classList.add("active");
-
-    // Update progress steps
-    updateProgressSteps(index);
-
-    // Update button visibility
-    updateButtons(index);
-
-    // Scroll to top of form
-    document.querySelector(".form-container").scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  }
-
-  function updateProgressSteps(index) {
-    progressSteps.forEach((step, i) => {
-      if (i < index) {
-        step.classList.add("completed");
-        step.classList.remove("active");
-      } else if (i === index) {
-        step.classList.add("active");
-        step.classList.remove("completed");
-      } else {
-        step.classList.remove("active", "completed");
-      }
-    });
-  }
-
-  function updateButtons(index) {
-    // Previous button
-    if (index === 0) {
-      prevBtn.style.display = "none";
-    } else {
-      prevBtn.style.display = "flex";
-    }
-
-    // Next/Submit button
-    if (index === sections.length - 1) {
-      nextBtn.style.display = "none";
-      submitBtn.style.display = "flex";
-    } else {
-      nextBtn.style.display = "flex";
-      submitBtn.style.display = "none";
-    }
-  }
-
-  function validateSection(index) {
-    const section = sections[index];
-    const inputs = section.querySelectorAll(
-      "input[required], select[required]"
-    );
-    let isValid = true;
-
-    inputs.forEach((input) => {
-      if (!input.value.trim()) {
-        isValid = false;
-        highlightError(input);
-      } else {
-        removeError(input);
-      }
-
-      // Validate email
-      if (input.type === "email" && input.value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(input.value)) {
-          isValid = false;
-          highlightError(input);
-        }
-      }
-
-      // Validate phone numbers
-      if (input.type === "tel" && input.value) {
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(input.value)) {
-          isValid = false;
-          highlightError(input);
-        }
-      }
-    });
-
-    // For board selection section, check if at least one board is selected
-    if (index === 3) {
-      const checkboxes = section.querySelectorAll('input[type="checkbox"]');
-      const isAnyChecked = Array.from(checkboxes).some((cb) => cb.checked);
-
-      if (!isAnyChecked) {
-        isValid = false;
-        showError("Please select at least one board");
-      }
-    }
-
-    return isValid;
-  }
-
-  function validateForm() {
-    // Validate all sections
-    for (let i = 0; i < sections.length; i++) {
-      if (!validateSection(i)) {
-        currentSection = i;
-        showSection(i);
-        return false;
-      }
-    }
-    return true;
-  }
-
-  function highlightError(input) {
-    input.style.borderBottom = "2px solid #cc5500";
-    input.style.animation = "shake 0.5s";
-
-    setTimeout(() => {
-      input.style.animation = "";
-    }, 500);
-  }
-
-  function removeError(input) {
-    input.style.borderBottom = "";
-  }
-
-  function showError(message) {
-    // Create temporary error message
-    const errorDiv = document.createElement("div");
-    errorDiv.className = "error-message";
-    errorDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #cc5500, #8b2e1f);
-            color: #f4f1de;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 10000;
-            animation: slideInRight 0.5s ease-out;
-            font-family: var(--font-philosopher);
-        `;
-    errorDiv.textContent = message;
-
-    document.body.appendChild(errorDiv);
-
-    setTimeout(() => {
-      errorDiv.style.animation = "slideOutRight 0.5s ease-out";
-      setTimeout(() => {
-        errorDiv.remove();
-      }, 500);
-    }, 3000);
-  }
-
-  function animateTransition(direction) {
-    const activeSection = document.querySelector(".form-section.active");
-
-    if (direction === "next") {
-      activeSection.style.animation = "slideInRight 0.5s ease-out";
-    } else {
-      activeSection.style.animation = "slideInLeft 0.5s ease-out";
-    }
-
-    setTimeout(() => {
-      activeSection.style.animation = "";
-    }, 500);
-  }
-
-  function submitForm() {
-    // Show loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML =
-      '<span class="btn-text">Submitting...</span> <span class="btn-icon"><i class="fas fa-spinner fa-spin"></i></span>';
-
-    // Simulate form submission (in production, this would be actual PHP processing)
-    setTimeout(() => {
-      // Hide form
-      form.style.display = "none";
-
-      // Show success message
-      const successMessage = document.getElementById("successMessage");
-      successMessage.classList.add("show");
-
-      // Trigger confetti effect
-      createConfetti();
-
-      // Reset button
-      submitBtn.disabled = false;
-      submitBtn.innerHTML =
-        '<span class="btn-text">Submit Application</span> <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>';
-
-      // In production, uncomment the line below to actually submit the form
-      // form.submit();
-    }, 2000);
-  }
-
-  function createConfetti() {
-    // Simple confetti effect using particles
-    const colors = ["#c68642", "#4a7c2c", "#8f9779", "#cc5500", "#d4a574"];
-    const confettiCount = 50;
-
-    for (let i = 0; i < confettiCount; i++) {
-      const confetti = document.createElement("div");
-      confetti.style.cssText = `
-                position: fixed;
-                width: 10px;
-                height: 10px;
-                background: ${
-                  colors[Math.floor(Math.random() * colors.length)]
-                };
-                top: -10px;
-                left: ${Math.random() * 100}%;
-                opacity: 1;
-                transform: rotate(${Math.random() * 360}deg);
-                z-index: 10000;
-                pointer-events: none;
-            `;
-
-      document.body.appendChild(confetti);
-
-      // Animate confetti
-      const duration = 2000 + Math.random() * 1000;
-      const targetY = window.innerHeight + 50;
-      const targetX = confetti.offsetLeft + (Math.random() - 0.5) * 200;
-
-      confetti.animate(
-        [
-          {
-            transform: `translate(0, 0) rotate(0deg)`,
-            opacity: 1,
-          },
-          {
-            transform: `translate(${
-              targetX - confetti.offsetLeft
-            }px, ${targetY}px) rotate(${Math.random() * 720}deg)`,
-            opacity: 0,
-          },
-        ],
-        {
-          duration: duration,
-          easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        }
-      ).onfinish = () => {
-        confetti.remove();
-      };
-    }
-  }
+  
 }
 
-// ===================================
-// PROGRESS BAR TRACKING
-// ===================================
 function initProgressTracking() {
   const form = document.getElementById("registrationForm");
   const progressFill = document.getElementById("progressFill");
-  // If form or progress element are missing, skip progress tracking
+  
   if (!form || !progressFill) return;
 
-  // Update progress based on form completion
+  
   form.addEventListener("input", updateProgress);
 
   function updateProgress() {
@@ -1366,14 +1236,14 @@ function initProgressTracking() {
     let totalFields = inputs.length;
     let filledFields = 0;
 
-    // Count filled required fields
+    
     inputs.forEach((input) => {
       if (input.value.trim()) {
         filledFields++;
       }
     });
 
-    // Check if at least one checkbox is selected
+    
     const isAnyChecked = Array.from(checkboxes).some((cb) => cb.checked);
     if (isAnyChecked) {
       filledFields++;
@@ -1387,11 +1257,8 @@ function initProgressTracking() {
   }
 }
 
-// ===================================
-// GSAP ANIMATIONS
-// ===================================
 if (typeof gsap !== "undefined") {
-  // Animate tribal patterns
+  
   gsap.to(".tribal-pattern", {
     rotation: 360,
     duration: 30,
@@ -1399,7 +1266,7 @@ if (typeof gsap !== "undefined") {
     ease: "none",
   });
 
-  // Animate section icons on scroll
+  
   const sectionIcons = document.querySelectorAll(".section-icon");
   sectionIcons.forEach((icon) => {
     icon.addEventListener("mouseenter", () => {
@@ -1421,7 +1288,7 @@ if (typeof gsap !== "undefined") {
     });
   });
 
-  // Animate form inputs on focus
+  
   const inputs = document.querySelectorAll("input, select");
   inputs.forEach((input) => {
     input.addEventListener("focus", () => {
@@ -1448,9 +1315,6 @@ if (typeof gsap !== "undefined") {
   });
 }
 
-// ===================================
-// SMOOTH SCROLL FOR NAVIGATION
-// ===================================
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     e.preventDefault();
@@ -1464,11 +1328,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-// ===================================
-
-// ===================================
-// ADD CSS ANIMATIONS DYNAMICALLY
-// ===================================
 const style = document.createElement("style");
 style.textContent = `
     @keyframes shake {
@@ -1512,11 +1371,8 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ===================================
-// CONSOLE EASTER EGG
-// ===================================
 console.log(
-  "%c🌿 UDAAN Season 12 🌿",
+  "%cðŸŒ¿ UDAAN Season 12 ðŸŒ¿",
   "font-size: 20px; color: #c68642; font-weight: bold;"
 );
 console.log(
@@ -1524,16 +1380,13 @@ console.log(
   "font-size: 14px; color: #4a7c2c; font-style: italic;"
 );
 console.log(
-  "%cJoin our tribe and make a difference! 🍃",
+  "%cJoin our tribe and make a difference! ðŸƒ",
   "font-size: 12px; color: #8f9779;"
 );
 
-// ===================================
-// COUNTDOWN TIMER INITIALIZATION
-// ===================================
 function initCountdownTimer() {
-  // Set registration close date - Change this to your desired deadline
-  // Format: new Date('YYYY-MM-DD HH:mm:ss')
+  
+  
   const registrationDeadline = new Date("2026-01-31 23:59:59").getTime();
 
   function updateCountdown() {
@@ -1541,19 +1394,19 @@ function initCountdownTimer() {
     const distance = registrationDeadline - now;
 
     if (distance < 0) {
-      // Countdown finished
+      
       document.getElementById("days").textContent = "00";
       document.getElementById("hours").textContent = "00";
       document.getElementById("minutes").textContent = "00";
       document.getElementById("seconds").textContent = "00";
 
-      // Optional: Change label to indicate registration closed
+      
       const label = document.querySelector(".countdown-label");
       if (label) label.textContent = "Registrations Closed";
       return;
     }
 
-    // Calculate time units
+    
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -1561,7 +1414,7 @@ function initCountdownTimer() {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Update DOM
+    
     document.getElementById("days").textContent = String(days).padStart(2, "0");
     document.getElementById("hours").textContent = String(hours).padStart(
       2,
@@ -1577,16 +1430,13 @@ function initCountdownTimer() {
     );
   }
 
-  // Initial update
+  
   updateCountdown();
 
-  // Update every second
+  
   setInterval(updateCountdown, 1000);
 }
 
-// ===================================
-// HERO SUBTITLE TYPING
-// ===================================
 function initHeroTyping() {
   const el = document.getElementById("heroSubtitle");
   if (!el) return;
@@ -1594,9 +1444,9 @@ function initHeroTyping() {
   const text = el.textContent.trim();
   el.textContent = "";
 
-  // Delay slightly to ensure external libs initialize and element is painted
+  
   setTimeout(() => {
-    // Prefer TypeIt if available
+    
     if (typeof TypeIt !== "undefined") {
       new TypeIt("#heroSubtitle", {
         strings: text,
@@ -1612,20 +1462,20 @@ function initHeroTyping() {
       return;
     }
 
-    // Fallback to Typed.js if available
+    
     if (typeof Typed !== "undefined") {
       new Typed("#heroSubtitle", {
         strings: [text],
         typeSpeed: 70,
         showCursor: true,
         onComplete: function () {
-          // Keep the final text
+          
         },
       });
       return;
     }
 
-    // Final fallback - simple manual typer
+    
     let i = 0;
     const speed = 70;
     const interval = setInterval(() => {
@@ -1636,26 +1486,22 @@ function initHeroTyping() {
   }, 150);
 }
 
-// Initialize tribal loader (preloader)
 function initTribalLoader() {
-  // Hide loader shortly after window load to ensure assets are ready
+  
   window.addEventListener("load", () => {
     const loader = document.getElementById("tribal-loader");
     if (!loader) return;
-    // give a short grace period then hide
+    
     setTimeout(() => {
       loader.classList.add("hidden");
     }, 1400);
   });
 }
 
-// ===================================
-// BOARD SELECTION TOGGLE FUNCTION
-// ===================================
 function toggleBoard(card) {
   const checkbox = card.querySelector('input[type="checkbox"]');
 
-  // Wait for event propagation
+  
   setTimeout(() => {
     if (checkbox.checked) {
       card.classList.add("selected");
@@ -1664,3 +1510,4 @@ function toggleBoard(card) {
     }
   }, 10);
 }
+
